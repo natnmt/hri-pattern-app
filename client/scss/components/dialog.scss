@@ -1,0 +1,51 @@
+@import '../common/style';
+
+.dialog {
+  position: absolute;
+  top: calc(50% - 240px);
+  left: calc(50% - 335px);
+  width: 670px;
+  height: 480px;
+  background-color: $color-primary-light;
+  .dialog-icon {
+    .warn-icon {
+      margin-left: 305px;
+      margin-top: 80px;
+    }
+  }
+  .dialog-message {
+    @include helvetica;
+    color: $color-primary-dark;
+    font-size:28px;
+    letter-spacing:0.5px;
+    line-height:40px;
+    padding-left: 68px;
+    padding-right: 68px;
+    padding-top: 50px;
+    padding-bottom: 53px;
+  }
+  .dialog-buttons {
+    display: inline-flex;
+    margin-left: 173px;
+    button {
+      @include helvetica-bold;
+      width: 144px;
+      height: 54px;
+      font-size: 21px;
+      border:3px solid $color-ibm-blue-40;
+    }
+    .cancel-button {
+      button {
+        margin-right: 25px;
+        background: $color-primary-light;
+        color: $color-ibm-blue-40;
+      }
+    }
+    .quit-button {
+      button {
+        background: $color-ibm-blue-40;
+        color: $color-primary-light;
+      }
+    }
+  }
+}

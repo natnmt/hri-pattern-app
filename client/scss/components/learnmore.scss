@@ -1,0 +1,20 @@
+@import '../common/style';
+
+.learn-more {
+  display: flex;
+  section {
+    flex: 1;
+  }
+  .btn-default {
+    width: 210px;
+    height: 70px;
+    background-position: 165px;
+    padding-left: 20px;
+  }
+  // .left-column {
+
+  // }
+  // .right-column {
+
+  // }
+}

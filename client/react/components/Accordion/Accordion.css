@@ -1,0 +1,50 @@
+.Accordion {
+  overflow: hidden;
+  max-height: 30px;
+  width: 100%;
+  transition: .3s max-height ease-out;
+  padding-bottom: 10px;
+  text-align: justify;
+  border: 1px solid #9aa0a1;
+  border-radius: 3px;
+  margin: 10px 0px;
+}
+
+.Accordion.expanded {
+  max-height: 800px;
+  transition: .3s max-height ease-in;
+}
+
+.Accordion .title {
+  padding-bottom: 3px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  user-select: none;
+  padding: 10px 20px;
+}
+
+.Accordion .accordionIcon {
+  float: right;
+  margin-top: 2px;
+  cursor: pointer;
+  transition: all .3s ease-out;
+}
+
+.Accordion .content {
+  padding: 0px 20px;
+}
+
+.Accordion.expanded .accordionIcon {
+  transform: rotate(180deg);
+}
+
+.Accordion .accordionIcon > svg {
+  width: 25px;
+  height: 25px;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+.Accordion.visible {
+  overflow: visible;
+}

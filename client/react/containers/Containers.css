@@ -1,0 +1,28 @@
+.PatternForm select {
+  height: 40px;
+  background: #fbfcfc;
+  border: 1px solid #dfe9e9;
+}
+
+.PatternForm.readOnly input,
+.PatternForm.readOnly textarea,
+.PatternForm.readOnly select {
+  background: #eee;
+  pointer-events: none;
+  touch-action: none;;
+}
+
+.PatternForm > .footer {
+  margin: 10px 0px;
+  text-align: right;
+}
+
+.PatternForm > .footer button {
+  margin-right: 10px;
+}
+
+.Home .inputsContainer {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}

@@ -1,0 +1,17 @@
+@import '../common/style';
+
+.demo-custom {
+  padding: 20px 10px;
+  text-align: center;
+  img {
+    margin-bottom: 50px;
+    margin-top: 0px;
+    width: 1112px;
+    height: 428px;
+  }
+}
+.demo-footer {
+  position: absolute;
+  bottom: 60px;
+  right: 80px;
+}

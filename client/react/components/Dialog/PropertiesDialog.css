@@ -1,0 +1,5 @@
+.propertyList > div {
+  width: 50%;
+  display: inline-block;
+  margin: 5px 0px;
+}

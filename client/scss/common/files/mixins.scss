@@ -1,0 +1,125 @@
+@import './variables';
+
+@mixin helvetica() {
+  font-family: $helvetica;
+}
+
+@mixin helvetica-light() {
+  font-family: $helvetica-light;
+}
+
+@mixin helvetica-bold() {
+  font-family: $helvetica;
+  font-weight: 700;
+}
+
+@mixin generic-font() {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+@mixin flex() {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+
+@mixin flex-direction($direction) {
+  -webkit-flex-direction: $direction;
+  -ms-flex-direction: $direction;
+  flex-direction: $direction;
+}
+
+@mixin flex-justify-content($alignment) {
+	@if $alignment == "end" {
+	    -webkit-justify-content: flex-end;
+    	-ms-flex-pack: end;
+    	justify-content: flex-end;
+	} @else if $alignment == space-between {
+	    -webkit-justify-content: space-between;
+    	-ms-flex-pack: justify;
+	    justify-content: space-between;
+	} @else if $alignment == start {
+	    -webkit-justify-content: flex-start;
+    	-ms-flex-pack: start;
+	    justify-content: flex-start;
+	} @else {
+	    -webkit-justify-content: $alignment;
+	    -ms-flex-pack: $alignment;
+    	justify-content: $alignment;
+	}
+}
+
+@mixin flex-align-items($alignment) {
+  -webkit-align-items: $alignment;
+  -ms-flex-align: $alignment;
+  align-items: $alignment;
+}
+
+@mixin flex-wrap($wrap) {
+  -webkit-flex-wrap: $wrap;
+  -ms-flex-wrap: $wrap;
+  flex-wrap: $wrap;
+}
+
+@mixin box-align($alignment) {
+  -webkit-box-align: $alignment;
+  -moz-box-align: $alignment;
+  box-alignment: $alignment;
+}
+
+@mixin box-pack($pack) {
+  -webkit-box-pack: $pack;
+  -moz-box-pack: $pack;
+  box-pack: $pack;
+}
+
+@mixin box-sizing($box) {
+  -webkit-box-sizing: $box;
+  -moz-box-sizing: $box;
+  box-sizing: $box;
+}
+
+@mixin color-transition() {
+  -webkit-transition: border .3s,color .3s,background-color .3s;
+  -moz-transition: border .3s,color .3s,background-color .3s;
+  -o-transition: border .3s,color .3s,background-color .3s;
+  -ms-transition: border .3s,color .3s,background-color .3s;
+  transition: border .3s,color .3s,background-color .3s;
+}
+
+@mixin transition-all($transition) {
+  -webkit-transition: all $transition ease;
+  -moz-transition: all $transition ease;
+  -o-transition: all $transition ease;
+  -ms-transition: all $transition ease;
+  transition: all $transition ease;
+}
+
+@mixin full-width-container() {
+  margin: -70px;
+  margin-bottom: 0px;
+}
+
+@mixin full-width-content() {
+  padding: 60px 70px;
+}
+
+@mixin white-container() {
+  background: $color-primary-light;
+  color: $color-ibm-blue-80;
+}
+
+@mixin full-screen() {
+  position: fixed;
+  height: 100%;
+}
+
+@mixin animation($animation-name, $time, $fill-mode) {
+  -webkit-animation: $animation-name $time $fill-mode;
+  -moz-animation: $animation-name $time $fill-mode;
+  -o-animation: $animation-name $time $fill-mode;
+  animation: $animation-name $time $fill-mode;
+}

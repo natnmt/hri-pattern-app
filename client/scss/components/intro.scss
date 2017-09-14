@@ -1,0 +1,48 @@
+@import '../common/style';
+
+.intro {
+  position: absolute;
+  display: flex;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  section {
+    position: relative;
+    flex: 1;
+    padding: 159px 65px 0;
+    box-sizing: border-box;
+    &.left-column {
+      left: 0px;
+      background-color: $color-ibm-blue-40;
+      .btn-default {
+        background-color: $color-ibm-blue-80;
+      }
+    }
+  }
+  h2 {
+    font-family: $helvetica-light;
+    font-size: 64px;
+    line-height: 1;
+    font-weight: normal;
+  }
+  p {
+    font-family: $helvetica-light;
+    font-size:36px;
+    line-height:40px;
+  }
+  .next-button {
+    position: absolute;
+    bottom: 133px;
+    width: 100%;
+    left: 0;
+    text-align: center;
+  }
+  .illustration {
+    position: absolute;
+    left: 0px;
+    top: 539px;
+    width: 1171px;
+    height: 166px;
+  }
+}

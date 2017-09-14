@@ -1,0 +1,102 @@
+@import '../common/style';
+
+.btn-default {
+	@include helvetica-bold();
+	@include generic-font();
+	@include box-sizing(border-box);
+	@include color-transition();
+	background: $color-primary-button;
+  color: $color-primary-light;
+	padding: 15px 25px 20px;
+	border: none;
+	cursor: pointer;
+	background-repeat: no-repeat;
+	background-position: 90px;
+	text-align: left;
+	font-size: 24px;
+	display: inline-block;
+	position: relative;
+	outline: none;
+	&:after {
+		content: "";
+    position: relative;
+    height: 27px;
+    width: 22px;
+    display: inline-block;
+    top: 5px;
+    background-image: url(../../images/icon-hand.svg);
+    background-repeat: no-repeat;
+    margin-left: 15px;
+	}
+	&.btn-quit {
+		&:after {
+			height: 22px;
+			width: 27px;
+			background-image: url(../../images/icon-quit.svg);
+		}
+	}
+}
+
+.next-button {
+  text-align: right;
+}
+.exit-link {
+  position: absolute;
+  right: 46px;
+  top: 14px;
+	cursor: pointer;
+	img {
+		position: relative;
+		margin-right: 15px;
+    top: 3px;
+	  height: 20px;
+	}
+}
+.white-box {
+  @include white-container();
+	padding: 70px 70px 40px;
+}
+.icon-button {
+  img {
+    width: 65px;
+  }
+}
+
+.fade-in {
+	@include animation(fade-in, 500ms, forwards);
+}
+
+.header-bar {
+	border: 1px solid $color-ibm-blue-40;
+	background-color: $color-ibm-blue-40;
+	top: 0;
+	left: 0;
+	right: 0;
+	height:50px;
+	position: fixed;
+	.previous-icon {
+		margin-left: 10px;
+		margin-right: 10px;
+		margin-top: 2px;
+	}
+	.header-label {
+		@include helvetica();
+		display: flex;
+		font-size:16px;
+    width: 170px;
+    padding: 10px;
+    padding-top: 15px;
+    padding-left: 19px;
+    margin-top: 0px;
+    margin-left: -1px;
+		letter-spacing:-0.38px;
+		cursor: pointer;
+		&:hover {
+	    background: $color-ibm-blue-50;
+		}
+	}
+}
+
+.hidden {
+	display: none;
+}

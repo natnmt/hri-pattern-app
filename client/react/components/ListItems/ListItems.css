@@ -1,0 +1,25 @@
+.ListItems {
+  margin: 20px 0px;
+}
+.ListItems > .item {
+  display: flex;
+  border: 1px solid #dfe9e9;
+  padding: 10px 20px;
+  margin-bottom: 10px;
+}
+
+.ListItems > .item > .info {
+  flex: 9;
+}
+
+.ListItems > .item > .info .label {
+  display: inline-block;
+  font-weight: bold;
+  width: 150px;
+}
+
+.ListItems > .item > .buttons > button:first-child {
+  margin-right: 10px;
+  position: relative;
+  top: 1px;
+}

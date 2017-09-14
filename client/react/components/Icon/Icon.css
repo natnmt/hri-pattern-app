@@ -1,0 +1,16 @@
+.Icon {
+  display: inline-block;
+}
+
+.Icon svg {
+  border: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  vertical-align: middle;
+  fill: currentcolor;
+  stroke: none;
+  width: 16px;
+  height: 16px;
+}

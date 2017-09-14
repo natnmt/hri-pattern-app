@@ -1,0 +1,75 @@
+
+.Input {
+  background: #fbfcfc;
+  border: 1px solid #dfe9e9;
+  font-family: Arial;
+  text-align: left;
+  box-sizing: border-box;
+  font-size: .875rem;
+  height: 40px;
+  padding: 0 14px;
+  min-width: 200px;
+  flex: 1;
+  left: 0 !important;
+  padding-bottom: 2px;
+  transition: all .3s cubic-bezier(.075, .82, .165, 1);
+  line-height: 21px;
+}
+
+.TextArea {
+  padding: 11px 14px;
+  width: initial;
+  height: auto;
+  margin-left: 0 !important;
+  resize: none;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+.Input::-ms-input-placeholder,
+.Input::-moz-placeholder,
+.Input::-webkit-input-placeholder {
+  opacity: .5;
+}
+
+.Input:disabled {
+  background-color: #fbfcfc;
+  color: #fbfcfc;
+  border-color: #fbfcfc;
+  box-shadow: initial;
+}
+
+.Input:focus {
+  background-color: white;
+  outline: none;
+  box-shadow: inset 0 -2px 0 0 #00A5CF, inset 0 0 0 1px 00A5CF;
+}
+
+.Input:invalid:selection,
+.Input.invalid:selection {
+  background-color: #ffc0cb;
+}
+
+.Input:disabled {
+  color: #bcc8c8;
+}
+
+.Input:disabled:hover {
+  cursor: not-allowed;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  opacity: 1;
+  font-size: 1.9rem;
+}
+
+
+.Input.readOnly {
+  background: #eee;
+  pointer-events: none;
+  touch-action: none;;
+}

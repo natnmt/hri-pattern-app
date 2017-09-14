@@ -1,0 +1,31 @@
+.Label {
+  font-family: Arial;
+  padding: 0 1em 0 0;
+  font-size: 12px;
+  align-self: center;
+  line-height: initial;
+}
+
+.Label.inputLabel {
+  flex: 1;
+  max-width: 150px;
+  min-width: 150px;
+}
+
+.Label.buttonLabel,
+.Label.buttonWithIconLabel {
+  padding: .625em 2em;
+  color: currentColor;
+  pointer-events: none;
+}
+
+.Label.errorLabel {
+  color: #5a0017;
+  font-size: .75rem;
+  transition-property: opacity, height;
+}
+
+.Label.menuLabel {
+  display: inline-block;
+  padding-right: 1em;
+}

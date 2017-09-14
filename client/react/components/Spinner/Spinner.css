@@ -1,0 +1,149 @@
+
+.Spinner {
+  position: relative;
+  display: inline-block;
+  z-index: 2;
+}
+
+.Spinner.hide{
+  display: none;
+}
+
+.Spinner .content {
+  margin: auto;
+}
+
+.Spinner .spinnerIcon {
+  fill: transparent;
+  stroke: #00A5CF;
+  stroke-width: 8;
+  stroke-linecap: "butt";
+  stroke-dasharray: 240;
+  stroke-dashoffset: 40;
+}
+
+/* initial rotation and stroke animation and infinite rotation*/
+.Spinner .initSpin {
+  -webkit-animation: init-rotate 1000ms cubic-bezier(0.6, 0, 1, 1) forwards, rotate-loop 500ms linear infinite;
+          animation: init-rotate 1000ms cubic-bezier(0.6, 0, 1, 1) forwards, rotate-loop 500ms linear infinite; }
+
+.Spinner .initSpin svg circle {
+  -webkit-animation: init-stroke 1000ms cubic-bezier(0.6, 0, 0.5, 1);
+          animation: init-stroke 1000ms cubic-bezier(0.6, 0, 0.5, 1); }
+
+/* initial rotation */
+@-webkit-keyframes init-rotate {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+@keyframes init-rotate {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+
+/* looping rotation */
+@-webkit-keyframes rotate-loop {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+@keyframes rotate-loop {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+
+/* end rotations */
+@-webkit-keyframes rotate-end-p1 {
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+@keyframes rotate-end-p1 {
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+
+@-webkit-keyframes rotate-end-p2 {
+  100% {
+    -webkit-transform: rotate(-360deg);
+            transform: rotate(-360deg); } }
+
+@keyframes rotate-end-p2 {
+  100% {
+    -webkit-transform: rotate(-360deg);
+            transform: rotate(-360deg); } }
+
+/* initial stroke animation */
+@-webkit-keyframes init-stroke {
+  0% {
+    stroke-dashoffset: 240; }
+  100% {
+    stroke-dashoffset: 40; } }
+@keyframes init-stroke {
+  0% {
+    stroke-dashoffset: 240; }
+  100% {
+    stroke-dashoffset: 40; } }
+
+/* end stroke animation */
+@-webkit-keyframes stroke-end {
+  0% {
+    stroke-dashoffset: 40; }
+  100% {
+    stroke-dashoffset: 240; } }
+@keyframes stroke-end {
+  0% {
+    stroke-dashoffset: 40; }
+  100% {
+    stroke-dashoffset: 240; } }
+
+/*ie only: stroke effects do not apply so opacity is used to fade in and out*/
+.ie-init-spin {
+  -webkit-animation: ie-init-rotate 1000ms cubic-bezier(0.6, 0, 1, 1) forwards, rotate-loop 500ms linear infinite;
+          animation: ie-init-rotate 1000ms cubic-bezier(0.6, 0, 1, 1) forwards, rotate-loop 500ms linear infinite; }
+
+.ie-end-spin {
+  -webkit-animation: rotate-end-p1 700ms cubic-bezier(0, 0, 0.7, 1.1) forwards, ie-rotate-end-p2 700ms cubic-bezier(0, 0, 1, 1) 700ms forwards;
+          animation: rotate-end-p1 700ms cubic-bezier(0, 0, 0.7, 1.1) forwards, ie-rotate-end-p2 700ms cubic-bezier(0, 0, 1, 1) 700ms forwards; }
+
+@-webkit-keyframes ie-init-rotate {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+    opacity: 0; }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+    opacity: 1; } }
+
+@keyframes ie-init-rotate {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+    opacity: 0; }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+    opacity: 1; } }
+
+@-webkit-keyframes ie-rotate-end-p2 {
+  100% {
+    opacity: 0;
+    -webkit-transform: rotate(-360deg);
+            transform: rotate(-360deg); } }
+
+@keyframes ie-rotate-end-p2 {
+  100% {
+    opacity: 0;
+    -webkit-transform: rotate(-360deg);
+            transform: rotate(-360deg); } }

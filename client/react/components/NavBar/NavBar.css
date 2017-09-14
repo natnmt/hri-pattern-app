@@ -1,0 +1,27 @@
+.NavBar {
+  position: fixed;
+  display: flex;
+  margin: 0;
+  padding: 0 60px;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 60px;
+  background: #25A18E;
+  align-items: center;
+  vertical-align: middle;
+  list-style-type: none;
+  z-index: 9999;
+}
+
+.NavBar a {
+  text-decoration: none;
+}
+.NavBar .logo a {
+  color: #FFF;
+  font-weight: bold;
+}
+
+.NavBar .items  a {
+  color: #C3E5E0;
+}
