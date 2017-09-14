@@ -32,7 +32,6 @@ export const savePattern = (pattern, onFinish) => (dispatch) => {
 
 
 export const updatePattern = (pattern, onFinish) => (dispatch) => {
-  console.log('updatePattern')
   dispatch(resetMessage())
   dispatch(toggleLoadingVisibility(true))
   const newObject = Object.assign({}, pattern)
