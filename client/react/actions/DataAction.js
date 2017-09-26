@@ -1,12 +1,13 @@
 /* eslint-disable */
 import fetch from 'isomorphic-fetch'
 import { toggleLoadingVisibility } from './ToggleUIAction'
-import { resetPattern, setSearchedPatterns, addMessage, resetMessage } from './PatternAction'
+import { resetPattern, setSearchedPatterns, addMessage, resetMessage, resetSearchedPatterns } from './PatternAction'
 import { unflatten, flatten } from '../utils/PatternStructure'
 import { isJson } from '../utils/InputValidation'
 
 export const savePattern = (pattern, onFinish) => (dispatch) => {
   dispatch(resetMessage())
+  dispatch(resetSearchedPatterns())
   dispatch(toggleLoadingVisibility(true))
   return fetch(`/database/find/${pattern.id}`)
   .then(response => {
@@ -31,7 +32,9 @@ export const savePattern = (pattern, onFinish) => (dispatch) => {
 }
 
 
-export const updatePattern = (pattern, onFinish) => (dispatch) => {
+export const updatePattern = (pattern, onFinish) => (dispatch, getState) => {
+  const { pattern: { textSearch } } = getState();
+
   dispatch(resetMessage())
   dispatch(toggleLoadingVisibility(true))
   const newObject = Object.assign({}, pattern)
@@ -54,9 +57,10 @@ export const updatePattern = (pattern, onFinish) => (dispatch) => {
       throw new Error('Error updating the pattern')
     }
     else {
-      dispatch(toggleLoadingVisibility(false))
       dispatch(resetPattern())
       onFinish()
+      dispatch(searchPattern(textSearch))
+      dispatch(toggleLoadingVisibility(false))
     }
   })
 }
@@ -81,6 +85,29 @@ export const persistPattern = (pattern, onFinish) => (dispatch) => {
       dispatch(toggleLoadingVisibility(false))
       dispatch(resetPattern())
       onFinish()
+    }
+  })
+}
+
+export const deletePattern = (patternId) => (dispatch) => {
+  dispatch(resetMessage())
+  dispatch(toggleLoadingVisibility(true))
+  return fetch(`/database/delete/${patternId}`, {
+    method: "DELETE",
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+    },
+  })
+  .then(response => {
+    if (response.status >= 400) {
+      dispatch(addMessage('Error deleting the pattern'))
+      dispatch(toggleLoadingVisibility(false))
+      throw new Error('Error deleting the pattern')
+    }
+    else {
+      dispatch(toggleLoadingVisibility(false))
+      dispatch(resetPattern())
     }
   })
 }

@@ -55,7 +55,6 @@ exports.findById = function(req, res) {
   console.log('Retrieving pattern: ' + id);
   db.collection('patterns', function(err, collection) {
     collection.findOne({'id': {$regex : new RegExp(id, "i")}}, function(err, item) {
-      console.log(item)
       res.send(item);
     });
   });
@@ -64,8 +63,6 @@ exports.findById = function(req, res) {
 exports.findAll = function(req, res) {
   db.collection('patterns', function(err, collection) {
     collection.find().toArray(function(err, items) {
-      console.log('items')
-      console.log(items)
       res.send(items);
     });
   });
@@ -110,7 +107,7 @@ exports.deletePattern = function(req, res) {
   var id = req.params.id;
   console.log('Deleting pattern: ' + id);
   db.collection('patterns', function(err, collection) {
-    collection.remove({'id':new BSON.ObjectID(id)}, {safe:true}, function(err, result) {
+    collection.remove({}, {safe:true}, function(err, result) {
       if (err) {
         res.send({'error':'An error has occurred - ' + err});
       } else {

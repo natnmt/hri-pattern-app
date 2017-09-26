@@ -12,7 +12,7 @@ import './Containers.css'
 const App = ({ loadingVisibility }) => (
   <Router>
     <div>
-      <NavBar logo="HRI Pattens" logoLink="/" />
+      <NavBar logo="HRI Pattens Respository" logoLink="/" />
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/add" component={PatternForm} />

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import Button from '../Button/Button'
 import './ListItems.css'
 
-const ListItems = ({ items, onViewClick, onEditClick, linkView, linkEdit }) => {
+const ListItems = ({ items, onViewClick, onEditClick, onDeleteClick, linkView, linkEdit }) => {
   const listItem = items.map((item, index) => {
     const viewButton = (
       <Button
@@ -21,6 +21,13 @@ const ListItems = ({ items, onViewClick, onEditClick, linkView, linkEdit }) => {
       />
     )
     const editElement = linkEdit ? <Link to={linkEdit}>{editButton}</Link> : editButton
+    const deleteButton = (
+      <Button
+        onClick={() => onDeleteClick(item.id)}
+        icon="remove"
+        secondaryColor
+      />
+    )
     return (
       <div className="item" key={index}>
         <div className="info">
@@ -32,6 +39,7 @@ const ListItems = ({ items, onViewClick, onEditClick, linkView, linkEdit }) => {
         <div className="buttons">
           {viewElement}
           {editElement}
+          {deleteButton}
         </div>
       </div>
     )

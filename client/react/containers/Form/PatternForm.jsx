@@ -135,8 +135,8 @@ const mapDispatchToProps = (dispatch) => ({
   toggleDialogVisibility: (visibility) => {
     dispatch(toggleDialogVisibility(visibility))
   },
-  addProperty: (visibility) => {
-    dispatch(addProperty(visibility))
+  addProperty: (property) => {
+    dispatch(addProperty(property))
   },
   savePattern: (patternObj, onFinish) => {
     dispatch(savePattern(patternObj, onFinish))
