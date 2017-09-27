@@ -19,6 +19,7 @@
 .TextArea {
   padding: 11px 14px;
   width: initial;
+  max-height: 120px;
   height: auto;
   margin-left: 0 !important;
   resize: none;

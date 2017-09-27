@@ -3,10 +3,10 @@ import Input from '../components/Form/Input'
 import TextArea from '../components/Form/TextArea'
 // import TextArea from '../components/Form/TextArea'
 
-export const getInput = (key, type, value, onChange, options, readOnly, placeholder) => {
+export const getInput = (key, type, inputType, value, onChange, options, readOnly, placeholder) => {
   let input = null
-  switch (type) {
-    case 'json':
+  switch (inputType) {
+    case 'textarea':
       input = (
         <TextArea
           type={type}

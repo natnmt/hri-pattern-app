@@ -15,7 +15,7 @@ const FormInput = ({ fields, pattern, onChange, onAddProperty, readOnly, editMod
       const newType = item.options ? 'select' : item.type
       const value = pattern.hasOwnProperty(item.id) ? pattern[item.id] : ''
       const newReadOnly = item.id === 'id' ? (readOnly || editMode) : readOnly
-      input = getInput(item.id, newType, value, onChange, item.options, newReadOnly, placeholder)
+      input = getInput(item.id, newType, item.inputType, value, onChange, item.options, newReadOnly, placeholder)
     }
     else {
       input = <GroupedForm

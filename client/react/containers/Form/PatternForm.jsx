@@ -6,7 +6,7 @@ import { withRouter, Link } from 'react-router-dom'
 import { getPatternUIStructure, getPropertiesNotSelected, validatePattern } from '../../utils/PatternUIStructure'
 import { updatePatternProperty, resetPattern, addProperty } from '../../actions/PatternAction'
 import { savePattern, updatePattern } from '../../actions/DataAction'
-import { toggleDialogVisibility } from '../../actions/ToggleUIAction'
+import { togglePropertyDialogVisibility } from '../../actions/ToggleUIAction'
 import Button from '../../components/Button/Button'
 import FormInput from '../../components/Form/FormInput'
 import PropertiesDialog from '../../components/Dialog/PropertiesDialog'
@@ -49,8 +49,8 @@ class PatternForm extends Component {
 
   render = () => {
     const {
-      location, pattern, updatePatternProperty, resetPatternData, dialogVisibility, toggleDialogVisibility,
-      addProperty, dbMessages,
+      location, pattern, updatePatternProperty, resetPatternData, propertyDialogVisibility,
+      togglePropertyDialogVisibility, addProperty, dbMessages,
     } = this.props
     const readOnly = location.pathname === '/view'
     const messages = this.state.message.map((item, index) =>
@@ -70,7 +70,7 @@ class PatternForm extends Component {
     )
     const addPropButton = !readOnly ? (
       <Button
-        onClick={() => { this.changeKey(null); toggleDialogVisibility(true) }}
+        onClick={() => { this.changeKey(null); togglePropertyDialogVisibility(true) }}
         icon="add"
         iconPosition="left"
       >
@@ -92,7 +92,7 @@ class PatternForm extends Component {
           fields={getPatternUIStructure(pattern)}
           pattern={pattern}
           onChange={updatePatternProperty}
-          onAddProperty={(id) => { this.changeKey(id); toggleDialogVisibility(true) }}
+          onAddProperty={(id) => { this.changeKey(id); togglePropertyDialogVisibility(true) }}
         />
         {addPropButton}
         <div className="footer">
@@ -109,10 +109,10 @@ class PatternForm extends Component {
         </div>
         <PropertiesDialog
           properties={getPropertiesNotSelected(pattern, this.state.nestedKey)}
-          visibility={dialogVisibility}
-          onCancel={() => toggleDialogVisibility(false)}
-          onClose={() => toggleDialogVisibility(false)}
-          onConfirm={(selectedProps) => { addProperty(selectedProps); toggleDialogVisibility(false) }}
+          visibility={propertyDialogVisibility}
+          onCancel={() => togglePropertyDialogVisibility(false)}
+          onClose={() => togglePropertyDialogVisibility(false)}
+          onConfirm={(selectedProps) => { addProperty(selectedProps); togglePropertyDialogVisibility(false) }}
         />
       </div>
     )
@@ -121,7 +121,7 @@ class PatternForm extends Component {
 
 const mapStateToProps = (state) => ({
   pattern: state.pattern.patternToBeSaved,
-  dialogVisibility: state.toggle.dialogVisibility,
+  propertyDialogVisibility: state.toggle.propertyDialogVisibility,
   dbMessages: state.pattern.message,
 })
 
@@ -132,8 +132,8 @@ const mapDispatchToProps = (dispatch) => ({
   resetPatternData: () => {
     dispatch(resetPattern())
   },
-  toggleDialogVisibility: (visibility) => {
-    dispatch(toggleDialogVisibility(visibility))
+  togglePropertyDialogVisibility: (visibility) => {
+    dispatch(togglePropertyDialogVisibility(visibility))
   },
   addProperty: (property) => {
     dispatch(addProperty(property))

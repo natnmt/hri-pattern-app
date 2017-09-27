@@ -34,13 +34,17 @@ export const savePattern = (pattern, onFinish) => (dispatch) => {
 
 export const updatePattern = (pattern, onFinish) => (dispatch, getState) => {
   const { pattern: { textSearch } } = getState();
-
   dispatch(resetMessage())
   dispatch(toggleLoadingVisibility(true))
   const newObject = Object.assign({}, pattern)
   if (newObject.hasOwnProperty('_id')) {
     delete newObject['_id']
   }
+  Object.keys(newObject).forEach((key) => {
+    if (newObject[key] === null || newObject[key].length === 0) {
+      delete newObject[key]
+    }
+  })
   const data = unflatten(newObject)
   return fetch(`/database/update/${pattern.id}`, {
     method: "PUT",
@@ -66,7 +70,13 @@ export const updatePattern = (pattern, onFinish) => (dispatch, getState) => {
 }
 
 export const persistPattern = (pattern, onFinish) => (dispatch) => {
-  const data = unflatten(Object.assign({}, pattern))
+  const newObject = Object.assign({}, pattern)
+  Object.keys(newObject).forEach((key) => {
+    if (newObject[key] === null || newObject[key].length === 0) {
+      delete newObject[key]
+    }
+  })
+  const data = unflatten(Object.assign({}, newObject))
   fetch('/database/insert', {
     method: "POST",
     headers: {
@@ -89,7 +99,8 @@ export const persistPattern = (pattern, onFinish) => (dispatch) => {
   })
 }
 
-export const deletePattern = (patternId) => (dispatch) => {
+export const deletePattern = (patternId) => (dispatch, getState) => {
+  const { pattern: { textSearch } } = getState();
   dispatch(resetMessage())
   dispatch(toggleLoadingVisibility(true))
   return fetch(`/database/delete/${patternId}`, {
@@ -106,6 +117,7 @@ export const deletePattern = (patternId) => (dispatch) => {
       throw new Error('Error deleting the pattern')
     }
     else {
+      dispatch(searchPattern(textSearch))
       dispatch(toggleLoadingVisibility(false))
       dispatch(resetPattern())
     }

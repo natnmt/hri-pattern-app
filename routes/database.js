@@ -107,7 +107,7 @@ exports.deletePattern = function(req, res) {
   var id = req.params.id;
   console.log('Deleting pattern: ' + id);
   db.collection('patterns', function(err, collection) {
-    collection.remove({}, {safe:true}, function(err, result) {
+    collection.remove({'id': id}, {safe:true}, function(err, result) {
       if (err) {
         res.send({'error':'An error has occurred - ' + err});
       } else {

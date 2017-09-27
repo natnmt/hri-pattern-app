@@ -11,7 +11,7 @@
 }
 
 .Accordion.expanded {
-  max-height: 800px;
+  max-height: 900px;
   transition: .3s max-height ease-in;
 }
 
