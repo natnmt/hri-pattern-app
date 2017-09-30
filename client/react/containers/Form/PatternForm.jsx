@@ -1,12 +1,13 @@
 // external imports
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { withRouter, Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 // internal imports
 import { getPatternUIStructure, getPropertiesNotSelected, validatePattern } from '../../utils/PatternUIStructure'
 import { updatePatternProperty, resetPattern, addProperty } from '../../actions/PatternAction'
-import { savePattern, updatePattern } from '../../actions/DataAction'
+import { savePattern, updatePattern } from '../../actions/PatternDataAction'
 import { togglePropertyDialogVisibility } from '../../actions/ToggleUIAction'
+import Footer from '../../components/Form/Footer'
 import Button from '../../components/Button/Button'
 import FormInput from '../../components/Form/FormInput'
 import PropertiesDialog from '../../components/Dialog/PropertiesDialog'
@@ -59,15 +60,6 @@ class PatternForm extends Component {
         {item}
       </p>
     )
-    const confirmButton = readOnly ? null : (
-      <Button
-        onClick={() => {
-          this.handlePatternValidation(pattern, getPatternUIStructure(pattern), this.returnToHomePage)
-        }}
-      >
-        Save
-      </Button>
-    )
     const addPropButton = !readOnly ? (
       <Button
         onClick={() => { this.changeKey(null); togglePropertyDialogVisibility(true) }}
@@ -95,14 +87,15 @@ class PatternForm extends Component {
           onAddProperty={(id) => { this.changeKey(id); togglePropertyDialogVisibility(true) }}
         />
         {addPropButton}
-        <div className="footer">
-          <Link to="/">
-            <Button onClick={resetPatternData} secondaryColor >
-              Cancel
-            </Button>
-          </Link>
-          {confirmButton}
-        </div>
+        <Footer
+          onConfirm={() => {
+            this.handlePatternValidation(pattern, getPatternUIStructure(pattern), this.returnToHomePage)
+          }}
+          confirmLabel="Save"
+          onCancel={resetPatternData}
+          cancelLabel="Cancel"
+          readOnly={readOnly}
+        />
         <div className="message">
           {messages}
           {dbMessagesElements}

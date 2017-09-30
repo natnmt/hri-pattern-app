@@ -1,8 +1,3 @@
-export const setPattern = (id) => (dispatch, getState) => {
-  const { pattern: { searchedPatterns } } = getState();
-  dispatch(setPatternObject(searchedPatterns.find(item => item.id === id)))
-}
-
 export const SET_PATTERN_OBJECT = 'SET_PATTERN_OBJECT'
 export const setPatternObject = (pattern) => ({
   type: SET_PATTERN_OBJECT,

@@ -50,16 +50,6 @@ exports.searchPattern = function(req, res) {
   });
 };
 
-exports.findById = function(req, res) {
-  var id = req.params.id;
-  console.log('Retrieving pattern: ' + id);
-  db.collection('patterns', function(err, collection) {
-    collection.findOne({'id': {$regex : new RegExp(id, "i")}}, function(err, item) {
-      res.send(item);
-    });
-  });
-};
-
 exports.findAll = function(req, res) {
   db.collection('patterns', function(err, collection) {
     collection.find().toArray(function(err, items) {
@@ -88,10 +78,11 @@ exports.addPattern = function(req, res) {
 
 exports.updatePattern = function(req, res) {
   var id = req.params.id;
+  var idObject = new mongo.ObjectID(id);
   var pattern = req.body;
   console.log('Updating pattern: ' + id);
   db.collection('patterns', function(err, collection) {
-    collection.update({'id': {$regex : new RegExp(id, "i")}}, pattern, {safe:true}, function(err, result) {
+    collection.update({'_id': idObject}, pattern, {safe:true}, function(err, result) {
       if (err) {
         console.log('Error updating pattern: ' + err);
         res.send({'error':'An error has occurred'});
@@ -105,9 +96,11 @@ exports.updatePattern = function(req, res) {
 
 exports.deletePattern = function(req, res) {
   var id = req.params.id;
+  console.log(id)
+  var idObject = new mongo.ObjectID(id);
   console.log('Deleting pattern: ' + id);
   db.collection('patterns', function(err, collection) {
-    collection.remove({'id': id}, {safe:true}, function(err, result) {
+    collection.remove({'_id': idObject}, {safe:true}, function(err, result) {
       if (err) {
         res.send({'error':'An error has occurred - ' + err});
       } else {

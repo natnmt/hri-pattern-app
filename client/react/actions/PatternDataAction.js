@@ -31,7 +31,6 @@ export const savePattern = (pattern, onFinish) => (dispatch) => {
   })
 }
 
-
 export const updatePattern = (pattern, onFinish) => (dispatch, getState) => {
   const { pattern: { textSearch } } = getState();
   dispatch(resetMessage())
@@ -46,7 +45,7 @@ export const updatePattern = (pattern, onFinish) => (dispatch, getState) => {
     }
   })
   const data = unflatten(newObject)
-  return fetch(`/database/update/${pattern.id}`, {
+  return fetch(`/database/update/${pattern._id}`, {
     method: "PUT",
     headers: {
       "Accept": "application/json",
@@ -62,9 +61,9 @@ export const updatePattern = (pattern, onFinish) => (dispatch, getState) => {
     }
     else {
       dispatch(resetPattern())
-      onFinish()
       dispatch(searchPattern(textSearch))
       dispatch(toggleLoadingVisibility(false))
+      onFinish()
     }
   })
 }
@@ -92,8 +91,8 @@ export const persistPattern = (pattern, onFinish) => (dispatch) => {
       throw new Error('Error saving the pattern')
     }
     else {
-      dispatch(toggleLoadingVisibility(false))
       dispatch(resetPattern())
+      dispatch(toggleLoadingVisibility(false))
       onFinish()
     }
   })
@@ -117,14 +116,15 @@ export const deletePattern = (patternId) => (dispatch, getState) => {
       throw new Error('Error deleting the pattern')
     }
     else {
+      dispatch(resetPattern())
       dispatch(searchPattern(textSearch))
       dispatch(toggleLoadingVisibility(false))
-      dispatch(resetPattern())
     }
   })
 }
 
 export const searchPattern = (text) => (dispatch) => {
+  dispatch(resetMessage())
   return fetch(`/database/search/${text}`)
   .then(response => {
     if (response.status >= 400) {
@@ -137,5 +137,8 @@ export const searchPattern = (text) => (dispatch) => {
   .then(json => {
     const flattenData = json.map(item => flatten(Object.assign({}, item)))
     dispatch(setSearchedPatterns(flattenData))
+    if (flattenData.length === 0) {
+      dispatch(addMessage('No patterns found'))
+    }
   })
 }

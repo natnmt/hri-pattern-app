@@ -21,9 +21,34 @@
   margin-right: 10px;
 }
 
-.Home .inputsContainer {
+.Home .listContainer {
   margin-top: 40px;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
+}
+
+.Home .rowContainer > a > button {
+  width: 140px;
+}
+
+.Home .rowContainer > .label {
+  margin: 10px;
+}
+
+.Home .rowContainer {
+  margin: 10px 0px 20px;
+  text-align: center;
+}
+
+.Home .searchMessage {
+  margin: 30px 0px;
+  padding: 20px;
+  border: 1px solid #dfe9e9;
+  font-weight: bold;
+}
+
+@media (min-width: 541px) {
+  .Home .rowContainer {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+   }
 }

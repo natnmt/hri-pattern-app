@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom'
 import Button from '../Button/Button'
 import './ListItems.css'
 
-const ListItems = ({ items, onViewClick, onEditClick, onDeleteClick, linkView, linkEdit }) => {
+const ListPersonas = ({ items, onViewClick, onEditClick, onDeleteClick, linkView, linkEdit }) => {
   const listItem = items.map((item, index) => {
     const viewButton = (
       <Button
-        onClick={() => onViewClick(item.id)}
+        onClick={() => onViewClick(item)}
         icon="view"
         secondaryColor
       />
@@ -15,7 +15,7 @@ const ListItems = ({ items, onViewClick, onEditClick, onDeleteClick, linkView, l
     const viewElement = linkView ? <Link to={linkView}>{viewButton}</Link> : viewButton
     const editButton = (
       <Button
-        onClick={() => onEditClick(item.id)}
+        onClick={() => onEditClick(item)}
         icon="edit"
         secondaryColor
       />
@@ -23,7 +23,7 @@ const ListItems = ({ items, onViewClick, onEditClick, onDeleteClick, linkView, l
     const editElement = linkEdit ? <Link to={linkEdit}>{editButton}</Link> : editButton
     const deleteButton = (
       <Button
-        onClick={() => onDeleteClick(item.id)}
+        onClick={() => onDeleteClick(item._id)}
         icon="remove"
         secondaryColor
       />
@@ -31,10 +31,9 @@ const ListItems = ({ items, onViewClick, onEditClick, onDeleteClick, linkView, l
     return (
       <div className="item" key={index}>
         <div className="info">
-          <p><span className="label">ID: </span>{item.id}</p>
           <p><span className="label">Name: </span>{item.name}</p>
-          <p><span className="label">Type: </span>{item.type}</p>
-          <p><span className="label">Problem: </span>{item.problem}</p>
+          <p><span className="label">Age: </span>{item.age}</p>
+          <p><span className="label">Biography: </span>{item.biography}</p>
         </div>
         <div className="buttons">
           {viewElement}
@@ -51,12 +50,12 @@ const ListItems = ({ items, onViewClick, onEditClick, onDeleteClick, linkView, l
   )
 }
 
-ListItems.propTypes = {
+ListPersonas.propTypes = {
   items: PropTypes.array,
 }
 
-ListItems.defaultProps = {
+ListPersonas.defaultProps = {
   items: [],
 }
 
-export default ListItems
+export default ListPersonas

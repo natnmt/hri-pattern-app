@@ -1,25 +1,27 @@
 import React, { PropTypes } from 'react'
 import './Input.css'
 
-const TextArea = (props) => (
-  props.readOnly ? (
-    <span className="readOnly">{props.value}</span>
-  ) : (
-    <textarea
-      className={['Input', 'TextArea'].join(' ')}
-      placeholder={props.placeholder}
-      value={props.value}
-      rows={props.rows}
-      cols={props.cols}
-      disabled={props.disabled}
-      required={props.required}
-      onChange={props.onChange}
-      onFocus={props.onFocus}
-      onBlur={props.onBlur}
-      id={props.id}
-      autoFocus={props.autoFocus}
-    />
-  )
+const TextArea = ({
+  placeholder, value, rows, cols, readOnly, disabled, required, onChange, onFocus, onBlur, id, autoFocus,
+}) => (
+  <textarea
+    className={[
+      'Input',
+      'TextArea',
+      readOnly ? 'readOnly' : '',
+    ].join(' ')}
+    placeholder={placeholder}
+    value={value}
+    rows={rows}
+    cols={cols}
+    disabled={disabled}
+    required={required}
+    onChange={onChange}
+    onFocus={onFocus}
+    onBlur={onBlur}
+    id={id}
+    autoFocus={autoFocus}
+  />
 )
 
 TextArea.propTypes = {

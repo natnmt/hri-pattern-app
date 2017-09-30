@@ -94,3 +94,10 @@ export const isJson = (str) => {
   }
   return true
 }
+
+export const isValidAge = (value) => {
+  if (value.length === 0 || value < 0 || value > 100) {
+    return false
+  }
+  return true
+}

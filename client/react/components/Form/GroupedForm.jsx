@@ -5,10 +5,9 @@ import Label from './Label'
 
 const GroupedForm = ({ items, pattern, onChangeInput, readOnly }) => {
   const fields = items.map((item) => {
-    const newType = item.options ? 'select' : item.type
     const value = pattern.hasOwnProperty(item.id) ? pattern[item.id] : ''
     const placeholder = item.hasOwnProperty('placeholder') ? item.placeholder : ''
-    const content = getInput(item.id, newType, item.inputType, value, onChangeInput, item.options, readOnly, placeholder)
+    const content = getInput(item.id, item.type, item.inputType, value, onChangeInput, item.options, readOnly, placeholder)
     return (
       <FieldContainer key={item.id}>
         <Label>{item.label}</Label>

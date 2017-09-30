@@ -12,10 +12,9 @@ const FormInput = ({ fields, pattern, onChange, onAddProperty, readOnly, editMod
     const isNewSection = item.children
     const placeholder = item.hasOwnProperty('placeholder') ? item.placeholder : ''
     if (item.type) {
-      const newType = item.options ? 'select' : item.type
       const value = pattern.hasOwnProperty(item.id) ? pattern[item.id] : ''
       const newReadOnly = item.id === 'id' ? (readOnly || editMode) : readOnly
-      input = getInput(item.id, newType, item.inputType, value, onChange, item.options, newReadOnly, placeholder)
+      input = getInput(item.id, item.type, item.inputType, value, onChange, item.options, newReadOnly, placeholder)
     }
     else {
       input = <GroupedForm
