@@ -45,6 +45,7 @@
   font-weight: bold;
 }
 
+
 @media (min-width: 541px) {
   .Home .rowContainer {
     display: flex;

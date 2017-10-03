@@ -1,0 +1,8 @@
+.SolutionsForm .Footer {
+  margin: 20px;
+}
+
+.SolutionsForm .solution {
+  padding: 15px 0px;
+  border-bottom: 1px solid #dadfdf;
+}

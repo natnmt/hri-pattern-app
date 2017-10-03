@@ -4,16 +4,19 @@ import Accordion from '../Accordion/Accordion'
 import Button from '../Button/Button'
 import FieldContainer from './FieldContainer'
 import GroupedForm from './GroupedForm'
+import SolutionsForm from './SolutionsForm'
 import Label from './Label'
 
-const FormInput = ({ fields, pattern, onChange, onAddProperty, readOnly, editMode }) => {
+const FormInput = ({
+  fields, pattern, onChange, onAddProperty, readOnly, editMode, onSolutionChange, onAddPatternSolution, onAddSolutionProperty,
+}) => {
   const formFields = fields.map((item, idx) => {
     let input = null
     const isNewSection = item.children
     const placeholder = item.hasOwnProperty('placeholder') ? item.placeholder : ''
     if (item.type) {
       const value = pattern.hasOwnProperty(item.id) ? pattern[item.id] : ''
-      const newReadOnly = item.id === 'id' ? (readOnly || editMode) : readOnly
+      const newReadOnly = item.id === 'id' || item.id === 'type' ? (readOnly || editMode) : readOnly
       input = getInput(item.id, item.type, item.inputType, value, onChange, item.options, newReadOnly, placeholder)
     }
     else {
@@ -22,12 +25,23 @@ const FormInput = ({ fields, pattern, onChange, onAddProperty, readOnly, editMod
         pattern={pattern}
         onChangeInput={onChange}
         readOnly={readOnly}
+        editMode={editMode}
       />
     }
+    const isSolutionLayer = item.id === 'solution_layer'
     const content = isNewSection ? (
       <Accordion startsExpanded title={item.label}>
         {input}
-        {!readOnly ? (
+        {isSolutionLayer ?
+          <SolutionsForm
+            pattern={pattern}
+            onChangeInput={onSolutionChange}
+            onAddPatternSolution={onAddPatternSolution}
+            onAddSolutionProperty={onAddSolutionProperty}
+            readOnly={readOnly}
+          /> : null
+        }
+        {!readOnly && !isSolutionLayer ? (
           <Button
             onClick={() => onAddProperty(item.id)}
             icon="add"

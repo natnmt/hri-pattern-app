@@ -68,8 +68,9 @@ input[type=number]::-webkit-outer-spin-button {
   font-size: 1.9rem;
 }
 
+select.readOnly,
 .Input.readOnly {
-  background: #eee;
+  background: #eee !important;
   pointer-events: none;
   touch-action: none;;
 }

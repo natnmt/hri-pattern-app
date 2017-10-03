@@ -22,7 +22,7 @@ export const getInput = (key, type, inputType, value, onChange, options, readOnl
       break
     case 'select':
       input = (
-        <select value={value} onChange={(event) => onChange(key, event.target.value)} readOnly={readOnly}>
+        <select value={value} onChange={(event) => onChange(key, event.target.value)} className={readOnly ? 'readOnly' : ''}>
           <option key="default" value="">
             Select an option
           </option>

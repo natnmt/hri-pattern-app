@@ -10,7 +10,11 @@ export const patternReducerStructure = {
   'init_state.description': '',
   'end_state.description': '',
   'solution_layer.type': '',
-  'solution_layer.solution': '',
+  'solution_layer.solutions': [
+    {
+      'solution': '',
+    },
+  ],
 }
 
 export const unflatten = (data) => {
@@ -38,10 +42,11 @@ export const flatten = (data) => {
     if (Object(cur) !== cur) {
       result[prop] = cur
     } else if (Array.isArray(cur)) {
-       for(let i=0, l=cur.length; i<l; i++)
+      result[prop] = cur
+       /* for(let i=0, l=cur.length; i<l; i++)
          recurse(cur[i], prop + '[' + i + ']');
       if (l == 0)
-        result[prop] = []
+        result[prop] = [] */
     } else {
       var isEmpty = true
       for (let p in cur) {

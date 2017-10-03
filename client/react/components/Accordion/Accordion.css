@@ -1,6 +1,5 @@
 .Accordion {
   overflow: hidden;
-  max-height: 30px;
   width: 100%;
   transition: .3s max-height ease-out;
   padding-bottom: 10px;
@@ -11,7 +10,6 @@
 }
 
 .Accordion.expanded {
-  max-height: 900px;
   transition: .3s max-height ease-in;
 }
 
@@ -20,12 +18,12 @@
   cursor: pointer;
   margin-bottom: 10px;
   user-select: none;
-  padding: 10px 20px;
+  padding: 15px 20px;
 }
 
 .Accordion .accordionIcon {
   float: right;
-  margin-top: 2px;
+  margin-top: -3px;
   cursor: pointer;
   transition: all .3s ease-out;
 }

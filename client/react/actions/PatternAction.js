@@ -6,19 +6,29 @@ export const setPatternObject = (pattern) => ({
   },
 })
 
-export const UPDATE_PATTERN_PROPERTY = 'UPDATE_PATTERN_PROPERTY'
-export const updatePatternProperty = (key, value) => ({
-  type: UPDATE_PATTERN_PROPERTY,
+export const ADD_PATTERN_PROPERTY = 'ADD_PATTERN_PROPERTY'
+export const addPatternProperty = (key, value) => ({
+  type: ADD_PATTERN_PROPERTY,
   payload: {
     key,
     value,
   },
 })
 
+export const UPDATE_PATTERN_PROPERTIES = 'UPDATE_PATTERN_PROPERTIES'
+export const updatePatternProperties = (key, value) => (dispatch, getState) => {
+  const { pattern: { patternToBeSaved } } = getState();
+  if (key === 'solution_layer.type' && value === 'pseudo-persona') {
+    patternToBeSaved['solution_layer.solutions'].forEach((item, index) => {
+      dispatch(removePatternSolutionProperty('persona', index))
+    })
+  }
+  dispatch(updatePatternProperty(key, value))
+}
 
-export const ADD_PATTERN_PROPERTY = 'ADD_PATTERN_PROPERTY'
-export const addPatternProperty = (key, value) => ({
-  type: ADD_PATTERN_PROPERTY,
+export const UPDATE_PATTERN_PROPERTY = 'UPDATE_PATTERN_PROPERTY'
+export const updatePatternProperty = (key, value) => ({
+  type: UPDATE_PATTERN_PROPERTY,
   payload: {
     key,
     value,
@@ -30,6 +40,40 @@ export const removePatternProperty = (key) => ({
   type: REMOVE_PATTERN_PROPERTY,
   payload: {
     key,
+  },
+})
+
+export const ADD_PATTERN_SOLUTION = 'ADD_PATTERN_SOLUTION'
+export const addPatternSolution = () => ({
+  type: ADD_PATTERN_SOLUTION,
+})
+
+export const ADD_PATTERN_SOLUTION_PROPERTY = 'ADD_PATTERN_SOLUTION_PROPERTY'
+export const addPatternSolutionProperty = (key, index, value) => ({
+  type: ADD_PATTERN_SOLUTION_PROPERTY,
+  payload: {
+    key,
+    index,
+    value,
+  },
+})
+
+export const UPDATE_PATTERN_SOLUTION_PROPERTY = 'UPDATE_PATTERN_SOLUTION_PROPERTY'
+export const updatePatternSolutionProperty = (key, index, value) => ({
+  type: UPDATE_PATTERN_SOLUTION_PROPERTY,
+  payload: {
+    key,
+    index,
+    value,
+  },
+})
+
+export const REMOVE_PATTERN_SOLUTION_PROPERTY = 'REMOVE_PATTERN_SOLUTION_PROPERTY'
+export const removePatternSolutionProperty = (key, index) => ({
+  type: REMOVE_PATTERN_SOLUTION_PROPERTY,
+  payload: {
+    key,
+    index,
   },
 })
 
@@ -72,26 +116,42 @@ export const resetMessage = (message) => ({
   type: RESET_MESSAGE,
 })
 
+const getValueByType = (type) => {
+  let value
+  switch (type) {
+    case 'array':
+      value = []
+      break
+    case 'object':
+      value = {}
+      break
+    case 'number':
+      value = 0
+      break
+    default:
+      value = ''
+  }
+  return value
+}
+
 export const addProperty = (properties) => (dispatch, getState) => {
   const { pattern: { patternToBeSaved } } = getState();
 
   properties.forEach(item => {
     if (!patternToBeSaved.hasOwnProperty(item.id)) {
-      let value
-      switch (item.type) {
-        case 'array':
-          value = []
-          break
-        case 'object':
-          value = {}
-          break
-        case 'number':
-          value = 0
-          break
-        default:
-          value = ''
-      }
+      const value = getValueByType(item.type)
       dispatch(addPatternProperty(item.id, value))
+    }
+  })
+}
+
+
+export const addSolutionProperty = (properties, index) => (dispatch, getState) => {
+  const { pattern: { patternToBeSaved } } = getState();
+  properties.forEach(item => {
+    if (!patternToBeSaved['solution_layer.solutions'].hasOwnProperty(item.id)) {
+      const value = getValueByType(item.type)
+      dispatch(updatePatternSolutionProperty(item.id, index, value))
     }
   })
 }

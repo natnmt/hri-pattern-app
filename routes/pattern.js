@@ -39,13 +39,22 @@ exports.searchPattern = function(req, res) {
     {"init_state.description": valueParam},
     {"end_state.description": valueParam},
     {"solution_layer.type": valueParam},
-    {"solution_layer.solution": valueParam},
   ]}
-
   db.collection('patterns', function(err, collection) {
     console.log(err)
     collection.find(query).toArray(function(err, results){
+      console.log(results)
       res.send(results);
+    });
+  });
+};
+
+exports.findById = function(req, res) {
+  var id = req.params.id;
+  console.log('Retrieving pattern: ' + id);
+  db.collection('patterns', function(err, collection) {
+    collection.findOne({'id': {$regex : new RegExp(id, "i")}}, function(err, item) {
+      res.send(item);
     });
   });
 };
@@ -64,6 +73,7 @@ exports.addPattern = function(req, res) {
   db.collection('patterns', function(err, collection) {
     collection.insert(pattern, {safe:true}, function(err, result) {
       if (err) {
+            console.log('Error' + err)
           res.send({'error':'An error has occurred'});
       } else {
           console.log('Success: ' + JSON.stringify(result[0]));

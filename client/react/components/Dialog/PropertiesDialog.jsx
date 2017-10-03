@@ -10,6 +10,19 @@ class PropertiesDialog extends Component {
     }
   }
 
+  componentWillReceiveProps = (nextProps) => {
+    const { checkedItems } = this.state
+    const items = checkedItems.slice(0, checkedItems.length);
+    items.forEach((item, idx) => {
+      const index = nextProps.properties.findIndex(prop => prop.id ===  item.id)
+      if (index < 0) {
+        this.setState({
+          checkedItems: [...items.slice(0, idx), ...items.slice(idx + 1, items.length)]
+        })
+      }
+    })
+  }
+
   onCheckBoxChange = (event) => {
     const value = event.target.checked
     const id = event.target.name

@@ -3,11 +3,13 @@ import { getInput } from '../../utils/InputValidation'
 import FieldContainer from './FieldContainer'
 import Label from './Label'
 
-const GroupedForm = ({ items, pattern, onChangeInput, readOnly }) => {
+const GroupedForm = ({ items, pattern, onChangeInput, readOnly, editMode }) => {
   const fields = items.map((item) => {
     const value = pattern.hasOwnProperty(item.id) ? pattern[item.id] : ''
     const placeholder = item.hasOwnProperty('placeholder') ? item.placeholder : ''
-    const content = getInput(item.id, item.type, item.inputType, value, onChangeInput, item.options, readOnly, placeholder)
+    const newReadOnly = item.id === 'solution_layer.type' && pattern['solution_layer.solutions'].length > 1 ?
+      (readOnly || editMode) : readOnly
+    const content = getInput(item.id, item.type, item.inputType, value, onChangeInput, item.options, newReadOnly, placeholder)
     return (
       <FieldContainer key={item.id}>
         <Label>{item.label}</Label>

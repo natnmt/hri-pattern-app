@@ -75,7 +75,9 @@ export const persistPattern = (pattern, onFinish) => (dispatch) => {
       delete newObject[key]
     }
   })
+  console.log(newObject)
   const data = unflatten(Object.assign({}, newObject))
+  console.log(data)
   fetch('/database/insert', {
     method: "POST",
     headers: {

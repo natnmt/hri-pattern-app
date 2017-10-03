@@ -13,6 +13,8 @@ app.use(bodyParser.json()); // for parsing application/json
 
 var appEnv = cfenv.getAppEnv();
 
+app.get('/database/find/:id', dbPattern.findById);
+app.get('/database/findAll', dbPattern.findById);
 app.post('/database/insert', dbPattern.addPattern);
 app.put('/database/update/:id', dbPattern.updatePattern);
 app.delete('/database/delete/:id', dbPattern.deletePattern);

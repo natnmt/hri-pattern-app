@@ -1,5 +1,76 @@
 import { isValidVarName, isNotEmpty, isNumberZeroToTen, isJson } from './InputValidation'
 
+
+export const solutionUIStructure = [
+  {
+    id: 'persona',
+    key: 'persona',
+    label: 'Persona',
+    type: 'json',
+    placeholder: 'Insert a persona',
+    inputType: 'text',
+    validation: isNotEmpty,
+    required: false,
+  },
+  {
+    id: 'parameters',
+    key: 'parameters',
+    label: 'Parameters',
+    type: 'json',
+    placeholder: 'Insert the persona/pseudo-persona parameters in a valid JSON format',
+    inputType: 'textarea',
+    validation: isJson,
+    required: false,
+  },
+  {
+    id: 'solution',
+    key: 'solution',
+    label: 'Solution',
+    type: 'string',
+    placeholder: 'Describe the pattern solution',
+    inputType: 'textarea',
+    validation: isNotEmpty,
+    required: true,
+  },
+  {
+    id: 'confidence',
+    key: 'confidence',
+    label: 'Confidence',
+    type: 'number',
+    validation: isNumberZeroToTen,
+    inputType: 'number',
+    required: false,
+  },
+  {
+    id: 'figure_path',
+    key: 'figure_path',
+    label: 'Figure',
+    inputType: 'text',
+    type: 'string',
+    required: false,
+    // Upload
+  },
+  {
+    id: 'communication',
+    key: 'communication',
+    label: 'Communication',
+    placeholder: 'Describe the communication (interaction) involved for this pattern',
+    inputType: 'textarea',
+    type: 'string',
+    required: false,
+  },
+  {
+    id: 'adapting_vars',
+    key: 'adapting_vars',
+    label: 'Adapting Vars',
+    type: 'json',
+    placeholder: 'Insert the adapting variables in a valid JSON format',
+    inputType: 'textarea',
+    validation: isJson,
+    required: false,
+  },
+]
+
 export const patternUIStructure = [
   {
     id: 'id',
@@ -72,12 +143,12 @@ export const patternUIStructure = [
     id: 'context',
     key: 'context',
     label: 'Context',
-    required: true,
     children: [
       {
         id: 'context.description',
         key: 'description',
         label: 'Description',
+        parentLabel: 'Context',
         type: 'string',
         placeholder: 'Insert the context description',
         inputType: 'textarea',
@@ -88,6 +159,7 @@ export const patternUIStructure = [
         id: 'context.parameters',
         key: 'parameters',
         label: 'Parameters',
+        parentLabel: 'Context',
         type: 'json',
         placeholder: 'Insert the context parameters in a valid JSON format',
         inputType: 'textarea',
@@ -102,7 +174,7 @@ export const patternUIStructure = [
     label: 'Forces',
     type: 'string',
     placeholder: 'Insert the pattern forces',
-    inputType: 'text',
+    inputType: 'textarea',
     validation: isNotEmpty,
     required: true,
   },
@@ -120,12 +192,12 @@ export const patternUIStructure = [
     id: 'init_state',
     key: 'init_state',
     label: 'Init State',
-    required: true,
     children: [
       {
         id: 'init_state.description',
         key: 'description',
         label: 'Description',
+        parentLabel: 'Init State',
         type: 'string',
         placeholder: 'Insert the initial state description',
         inputType: 'textarea',
@@ -135,6 +207,7 @@ export const patternUIStructure = [
       {
         id: 'init_state.parameters',
         key: 'parameters',
+        parentLabel: 'Init State',
         label: 'Parameters',
         type: 'json',
         placeholder: 'Insert the initial state parameters in a valid JSON format',
@@ -148,11 +221,11 @@ export const patternUIStructure = [
     id: 'end_state',
     key: 'end_state',
     label: 'End State',
-    required: true,
     children: [
       {
         id: 'end_state.description',
         key: 'description',
+        parentLabel: 'End State',
         label: 'Description',
         type: 'string',
         placeholder: 'Insert the end state description',
@@ -163,6 +236,7 @@ export const patternUIStructure = [
       {
         id: 'end_state.parameters',
         key: 'parameters',
+        parentLabel: 'End State',
         label: 'Parameters',
         type: 'json',
         placeholder: 'Insert the end state parameters in a valid JSON format',
@@ -176,7 +250,6 @@ export const patternUIStructure = [
     id: 'solution_layer',
     key: 'solution_layer',
     label: 'Solution Layer',
-    required: true,
     children: [
       {
         id: 'solution_layer.type',
@@ -187,63 +260,6 @@ export const patternUIStructure = [
         inputType: 'select',
         validation: isNotEmpty,
         required: true,
-      },
-      {
-        id: 'solution_layer.parameters',
-        key: 'parameters',
-        label: 'Parameters',
-        type: 'json',
-        placeholder: 'Insert the persona/pseudo-persona parameters in a valid JSON format',
-        inputType: 'textarea',
-        validation: isJson,
-        required: false,
-      },
-      {
-        id: 'solution_layer.solution',
-        key: 'solution',
-        label: 'Solution',
-        type: 'string',
-        placeholder: 'Describe the pattern solution',
-        inputType: 'textarea',
-        validation: isNotEmpty,
-        required: true,
-      },
-      {
-        id: 'solution_layer.confidence',
-        key: 'confidence',
-        label: 'Confidence',
-        type: 'number',
-        validation: isNumberZeroToTen,
-        inputType: 'number',
-        required: false,
-      },
-      {
-        id: 'solution_layer.figure_path',
-        key: 'figure_path',
-        label: 'Figure',
-        inputType: 'text',
-        type: 'string',
-        required: false,
-        // Upload
-      },
-      {
-        id: 'solution_layer.communication',
-        key: 'communication',
-        label: 'Communication',
-        placeholder: 'Describe the communication (interaction) involved for this pattern',
-        inputType: 'textarea',
-        type: 'string',
-        required: false,
-      },
-      {
-        id: 'solution_layer.adapting_vars',
-        key: 'adapting_vars',
-        label: 'Adapting Vars',
-        type: 'json',
-        placeholder: 'Insert the adapting variables in a valid JSON format',
-        inputType: 'textarea',
-        validation: isJson,
-        required: false,
       },
     ],
   },
@@ -421,39 +437,75 @@ export const getPropertiesNotSelected = (pattern, key) => {
 }
 
 export const validatePattern = (pattern, patternStructure) => {
-  const message = []
+  let message = []
   Object.keys(pattern).forEach((key) => {
-    const index = patternStructure.findIndex(item => item.id === key)
-    let property
-    if (index < 0) {
-      const arrKeys = key.split('.')
-      const currentPattern = patternStructure.find(item => item.id === arrKeys[0])
-      if (currentPattern && currentPattern.hasOwnProperty('children')) {
-        property = patternStructure.find(item => item.id === arrKeys[0]).children.find(item => item.id === key)
+    if (key !== 'solution_layer.solutions') {
+      const index = patternStructure.findIndex(item => item.id === key)
+      let property
+      if (index < 0) {
+        const arrKeys = key.split('.')
+        const currentPattern = patternStructure.find(item => item.id === arrKeys[0])
+        if (currentPattern && currentPattern.hasOwnProperty('children')) {
+          property = patternStructure.find(item => item.id === arrKeys[0]).children.find(item => item.id === key)
+        }
+      }
+      else {
+        property = patternStructure[index]
+      }
+      if (property && property.hasOwnProperty('validation')) {
+        const isValid = property.required || (!property.required && pattern[key].length > 0) ? property.validation(pattern[key]) : true
+        if (!isValid) {
+          const newLabel = property.parentLabel ? `${property.parentLabel}: ${property.label}` : property.label
+          message = message.concat(getMessageByType(property.id, newLabel, property.type))
+        }
       }
     }
     else {
-      property = patternStructure[index]
-    }
-    if (property && property.hasOwnProperty('validation')) {
-      const isValid = property.required || (!property.required && pattern[key].length > 0) ? property.validation(pattern[key]) : true
-      if (!isValid) {
-        if (property.type === 'number') {
-          message.push(`${property.label} is invalid. The number should be between 0 to 10`)
-        }
-        if (property.type === 'string') {
-          if (property.type === 'string' && property.id === 'id') {
-            message.push(`${property.label} is invalid. The value should not be empty, contain specialCharacters or empty space`)
+      pattern[key].forEach((item, index) => {
+        Object.keys(item).forEach((solutionKey) => {
+          const property = solutionUIStructure.find(item => item.id === solutionKey)
+          if (property && property.hasOwnProperty('validation')) {
+            const isValid = (pattern[key].length > 1 && solutionKey === 'parameters') ?
+              property.validation(item[solutionKey]) :
+              property.required || (!property.required && item[solutionKey].length > 0) ? property.validation(item[solutionKey]) : true
+            if (!isValid) {
+              message = message.concat(getMessageByType(property.id, `Solution ${index}: ${property.label}`, property.type))
+            }
           }
-          else {
-            message.push(`${property.label} is invalid. The value should not be empty`)
-          }
-        }
-        if (property.type === 'json') {
-          message.push(`${property.label} is not in a valid JSON object format`)
-        }
-      }
+        })
+
+      })
     }
   })
   return message
+}
+
+
+export const getMessageByType = (id, label, type) => {
+  const message = []
+  if (type === 'number') {
+    message.push(`${label} is invalid. The number should be between 0 to 10`)
+  }
+  if (type === 'string') {
+    if (type === 'string' && id === 'id') {
+      message.push(`${label} is invalid. The value should not be empty, contain specialCharacters or empty space`)
+    }
+    else {
+      message.push(`${label} is invalid. The value should not be empty`)
+    }
+  }
+  if (type === 'json') {
+    message.push(`${label} is not in a valid JSON object format`)
+  }
+  return message
+}
+
+export const getSolutionPropertiesNotSelected = (pattern, index) => {
+  const property = pattern['solution_layer.solutions'][index]
+  const nonSelectedProps = solutionUIStructure.filter(item =>
+    pattern['solution_layer.type'] !== 'persona' ?
+    (!property.hasOwnProperty(item.id) && item.id !== 'persona') :
+    !property.hasOwnProperty(item.id)
+  )
+  return nonSelectedProps
 }
