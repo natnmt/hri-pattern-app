@@ -7,21 +7,17 @@ import Loading from '../components/Loading/Loading'
 import NavBar from '../components/NavBar/NavBar'
 import Home from './Home/Home'
 import PatternForm from './Form/PatternForm'
-import PersonaForm from './Form/PersonaForm'
 import './Containers.css'
 
 const App = ({ loadingVisibility }) => (
   <Router>
     <div>
-      <NavBar logo="HRI Pattens Respository" logoLink="/" />
+      <NavBar logo="HRI Patterns" logoLink="/" />
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/add" component={PatternForm} />
         <Route path="/edit" component={PatternForm} />
         <Route path="/view" component={PatternForm} />
-        <Route path="/addpersona" component={PersonaForm} />
-        <Route path="/editpersona" component={PersonaForm} />
-        <Route path="/viewpersona" component={PersonaForm} />
       </Switch>
       <Loading visibility={loadingVisibility} />
     </div>

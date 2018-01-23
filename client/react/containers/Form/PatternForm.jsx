@@ -1,13 +1,12 @@
 // external imports
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 // internal imports
-import { getPatternUIStructure, getPropertiesNotSelected, getSolutionPropertiesNotSelected, validatePattern } from '../../utils/PatternUIStructure'
-import { updatePatternProperties, resetPattern, addProperty, updatePatternSolutionProperty, addPatternSolution, addSolutionProperty } from '../../actions/PatternAction'
-import { savePattern, updatePattern } from '../../actions/PatternDataAction'
-import { togglePropertyDialogVisibility } from '../../actions/ToggleUIAction'
-import Footer from '../../components/Form/Footer'
+import { getPatternUIStructure, getPropertiesNotSelected, validatePattern } from '../../utils/PatternUIStructure'
+import { updatePatternProperty, resetPattern, addProperty } from '../../actions/PatternAction'
+import { savePattern, updatePattern } from '../../actions/DataAction'
+import { toggleDialogVisibility } from '../../actions/ToggleUIAction'
 import Button from '../../components/Button/Button'
 import FormInput from '../../components/Form/FormInput'
 import PropertiesDialog from '../../components/Dialog/PropertiesDialog'
@@ -21,17 +20,12 @@ class PatternForm extends Component {
     super()
     this.state = {
       nestedKey: null,
-      solutionIndex: null,
       message: [],
     }
   }
 
   changeKey = (key) => {
     this.setState({ nestedKey: key })
-  }
-
-  changeSolutionIndex = (index) => {
-    this.setState({ solutionIndex: index })
   }
 
   handlePatternValidation = (pattern, patternStructure, onFinish) => {
@@ -55,21 +49,28 @@ class PatternForm extends Component {
 
   render = () => {
     const {
-      location, pattern, updatePatternProperty, resetPatternData, propertyDialogVisibility,
-      togglePropertyDialogVisibility, addProperty, dbMessages, updatePatternSolutionProperty,
-      addPatternSolution, addSolutionProperty,
+      location, pattern, updatePatternProperty, resetPatternData, dialogVisibility, toggleDialogVisibility,
+      addProperty, dbMessages,
     } = this.props
-    const { nestedKey, solutionIndex, message } = this.state
     const readOnly = location.pathname === '/view'
-    const messages = message.map((item, index) =>
+    const messages = this.state.message.map((item, index) =>
       <p key={index} className="error">
         <span>* </span>
         {item}
       </p>
     )
+    const confirmButton = readOnly ? null : (
+      <Button
+        onClick={() => {
+          this.handlePatternValidation(pattern, getPatternUIStructure(pattern), this.returnToHomePage)
+        }}
+      >
+        Save
+      </Button>
+    )
     const addPropButton = !readOnly ? (
       <Button
-        onClick={() => { this.changeKey(null); togglePropertyDialogVisibility(true) }}
+        onClick={() => { this.changeKey(null); toggleDialogVisibility(true) }}
         icon="add"
         iconPosition="left"
       >
@@ -82,11 +83,6 @@ class PatternForm extends Component {
         {item}
       </p>
     )
-    const onPropertyDialogCancel = () => {
-      togglePropertyDialogVisibility(false);
-      this.changeKey(null);
-      this.changeSolutionIndex(null)
-    }
     return (
       <div className={['PatternForm', readOnly ? 'readOnly' : ''].join(' ')}>
         Pattern Form
@@ -96,37 +92,27 @@ class PatternForm extends Component {
           fields={getPatternUIStructure(pattern)}
           pattern={pattern}
           onChange={updatePatternProperty}
-          onAddPatternSolution={addPatternSolution}
-          onSolutionChange={updatePatternSolutionProperty}
-          onAddSolutionProperty={(index) => { this.changeSolutionIndex(index); togglePropertyDialogVisibility(true) }}
-          onAddProperty={(id) => { this.changeKey(id); togglePropertyDialogVisibility(true) }}
+          onAddProperty={(id) => { this.changeKey(id); toggleDialogVisibility(true) }}
         />
         {addPropButton}
-        <Footer
-          onConfirm={() => {
-            this.handlePatternValidation(pattern, getPatternUIStructure(pattern), this.returnToHomePage)
-          }}
-          confirmLabel="Save"
-          onCancel={resetPatternData}
-          cancelLabel="Cancel"
-          readOnly={readOnly}
-        />
+        <div className="footer">
+          <Link to="/">
+            <Button onClick={resetPatternData} secondaryColor >
+              Cancel
+            </Button>
+          </Link>
+          {confirmButton}
+        </div>
         <div className="message">
           {messages}
           {dbMessagesElements}
         </div>
         <PropertiesDialog
-          properties={solutionIndex !== null ?
-            getSolutionPropertiesNotSelected(pattern, solutionIndex) :
-            getPropertiesNotSelected(pattern, nestedKey)
-          }
-          visibility={propertyDialogVisibility}
-          onCancel={onPropertyDialogCancel}
-          onClose={onPropertyDialogCancel}
-          onConfirm={(selectedProps) => {
-            solutionIndex !== null ? addSolutionProperty(selectedProps, solutionIndex) : addProperty(selectedProps);
-            onPropertyDialogCancel()
-          }}
+          properties={getPropertiesNotSelected(pattern, this.state.nestedKey)}
+          visibility={dialogVisibility}
+          onCancel={() => toggleDialogVisibility(false)}
+          onClose={() => toggleDialogVisibility(false)}
+          onConfirm={(selectedProps) => { addProperty(selectedProps); toggleDialogVisibility(false) }}
         />
       </div>
     )
@@ -135,37 +121,28 @@ class PatternForm extends Component {
 
 const mapStateToProps = (state) => ({
   pattern: state.pattern.patternToBeSaved,
-  propertyDialogVisibility: state.toggle.propertyDialogVisibility,
+  dialogVisibility: state.toggle.dialogVisibility,
   dbMessages: state.pattern.message,
 })
 
 const mapDispatchToProps = (dispatch) => ({
   updatePatternProperty: (key, value) => {
-    dispatch(updatePatternProperties(key, value))
-  },
-  addProperty: (properties) => {
-    dispatch(addProperty(properties))
-  },
-  updatePattern: (patternObj, onFinish) => {
-    dispatch(updatePattern(patternObj, onFinish))
-  },
-  savePattern: (patternObj, onFinish) => {
-    dispatch(savePattern(patternObj, onFinish))
-  },
-  addPatternSolution: () => {
-    dispatch(addPatternSolution())
-  },
-  addSolutionProperty: (properties, index) => {
-    dispatch(addSolutionProperty(properties, index))
-  },
-  updatePatternSolutionProperty: (key, index, value) => {
-    dispatch(updatePatternSolutionProperty(key, index, value))
+    dispatch(updatePatternProperty(key, value))
   },
   resetPatternData: () => {
     dispatch(resetPattern())
   },
-  togglePropertyDialogVisibility: (visibility) => {
-    dispatch(togglePropertyDialogVisibility(visibility))
+  toggleDialogVisibility: (visibility) => {
+    dispatch(toggleDialogVisibility(visibility))
+  },
+  addProperty: (visibility) => {
+    dispatch(addProperty(visibility))
+  },
+  savePattern: (patternObj, onFinish) => {
+    dispatch(savePattern(patternObj, onFinish))
+  },
+  updatePattern: (patternObj, onFinish) => {
+    dispatch(updatePattern(patternObj, onFinish))
   },
 })
 

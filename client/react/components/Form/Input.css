@@ -19,7 +19,6 @@
 .TextArea {
   padding: 11px 14px;
   width: initial;
-  max-height: 120px;
   height: auto;
   margin-left: 0 !important;
   resize: none;
@@ -68,9 +67,9 @@ input[type=number]::-webkit-outer-spin-button {
   font-size: 1.9rem;
 }
 
-select.readOnly,
+
 .Input.readOnly {
-  background: #eee !important;
+  background: #eee;
   pointer-events: none;
   touch-action: none;;
 }

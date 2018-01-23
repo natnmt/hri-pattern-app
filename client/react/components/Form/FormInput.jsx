@@ -4,44 +4,33 @@ import Accordion from '../Accordion/Accordion'
 import Button from '../Button/Button'
 import FieldContainer from './FieldContainer'
 import GroupedForm from './GroupedForm'
-import SolutionsForm from './SolutionsForm'
 import Label from './Label'
 
-const FormInput = ({
-  fields, pattern, onChange, onAddProperty, readOnly, editMode, onSolutionChange, onAddPatternSolution, onAddSolutionProperty,
-}) => {
+const FormInput = ({ fields, pattern, onChange, onAddProperty, readOnly, editMode }) => {
   const formFields = fields.map((item, idx) => {
     let input = null
     const isNewSection = item.children
     const placeholder = item.hasOwnProperty('placeholder') ? item.placeholder : ''
-    if (item.type) {
+    if (!item.children) {
+      const newType = item.options ? 'select' : item.type
       const value = pattern.hasOwnProperty(item.id) ? pattern[item.id] : ''
-      const newReadOnly = item.id === 'id' || item.id === 'type' ? (readOnly || editMode) : readOnly
-      input = getInput(item.id, item.type, item.inputType, value, onChange, item.options, newReadOnly, placeholder)
+      const newReadOnly = item.id === 'id' ? (readOnly || editMode) : readOnly
+      input = getInput(item.id, newType, value, onChange, item.options, newReadOnly, placeholder)
     }
     else {
-      input = <GroupedForm
-        items={item.children}
+      input = <FormInput
+        fields={item.children}
         pattern={pattern}
-        onChangeInput={onChange}
+        onChange={onChange}
+        onAddProperty={onAddProperty}
         readOnly={readOnly}
         editMode={editMode}
       />
     }
-    const isSolutionLayer = item.id === 'solution_layer'
     const content = isNewSection ? (
       <Accordion startsExpanded title={item.label}>
         {input}
-        {isSolutionLayer ?
-          <SolutionsForm
-            pattern={pattern}
-            onChangeInput={onSolutionChange}
-            onAddPatternSolution={onAddPatternSolution}
-            onAddSolutionProperty={onAddSolutionProperty}
-            readOnly={readOnly}
-          /> : null
-        }
-        {!readOnly && !isSolutionLayer ? (
+        {!readOnly ? (
           <Button
             onClick={() => onAddProperty(item.id)}
             icon="add"

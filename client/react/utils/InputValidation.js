@@ -3,10 +3,10 @@ import Input from '../components/Form/Input'
 import TextArea from '../components/Form/TextArea'
 // import TextArea from '../components/Form/TextArea'
 
-export const getInput = (key, type, inputType, value, onChange, options, readOnly, placeholder) => {
+export const getInput = (key, type, value, onChange, options, readOnly, placeholder) => {
   let input = null
-  switch (inputType) {
-    case 'textarea':
+  switch (type) {
+    case 'json':
       input = (
         <TextArea
           type={type}
@@ -22,7 +22,7 @@ export const getInput = (key, type, inputType, value, onChange, options, readOnl
       break
     case 'select':
       input = (
-        <select value={value} onChange={(event) => onChange(key, event.target.value)} className={readOnly ? 'readOnly' : ''}>
+        <select value={value} onChange={(event) => onChange(key, event.target.value)} readOnly={readOnly}>
           <option key="default" value="">
             Select an option
           </option>
@@ -90,13 +90,6 @@ export const isJson = (str) => {
     JSON.parse(str)
   }
   catch (e) {
-    return false
-  }
-  return true
-}
-
-export const isValidAge = (value) => {
-  if (value.length === 0 || value < 0 || value > 100) {
     return false
   }
   return true

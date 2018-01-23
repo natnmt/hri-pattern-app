@@ -3,8 +3,6 @@ import Icon from '../Icon/Icon'
 import './Accordion.css'
 
 const ACCORDION_TRANSITION_TIME = 300
-const HEADER_HEIGHT = 35
-const CONTENT_EXTRA_HEIGHT = HEADER_HEIGHT + 25
 
 class Accordion extends Component {
 
@@ -19,36 +17,11 @@ class Accordion extends Component {
     this.state = {
       expanded: startsExpanded,
       finishedTransition: true,
-      contentHeight: 0,
-      maxHeight: 0,
-    }
-  }
-
-  componentDidMount = () => {
-    if (this.state.expanded) {
-      const height = this.content.getBoundingClientRect().height + CONTENT_EXTRA_HEIGHT
-      this.setState({ maxHeight: height, contentHeight: height })
-    }
-    else {
-      this.setState({ maxHeight: HEADER_HEIGHT })
-    }
-  }
-
-  componentDidUpdate = () => {
-    const height = this.content.getBoundingClientRect().height + CONTENT_EXTRA_HEIGHT
-    if (this.state.expanded && height !== this.state.maxHeight) {
-      this.setState({ maxHeight: height, contentHeight: height })
     }
   }
 
   toggle = () => {
     this.setState({ expanded: !this.state.expanded })
-    if (!this.state.expanded) {
-      this.setState({ maxHeight: this.state.contentHeight })
-    }
-    else {
-      this.setState({ maxHeight: HEADER_HEIGHT })
-    }
     this.updateTransitionState(false)
   }
 
@@ -63,7 +36,7 @@ class Accordion extends Component {
   }
 
   render = () => {
-    const { expanded, finishedTransition, maxHeight } = this.state
+    const { expanded, finishedTransition } = this.state
     const { title, children } = this.props
 
     const content = !expanded && finishedTransition ? null : children
@@ -75,14 +48,14 @@ class Accordion extends Component {
 
     return (
       <div
+        ref={obj => { this.container = obj }}
         className={className}
-        style={{maxHeight: `${maxHeight}px`}}
       >
         <div className="title" onClick={this.toggle}>
           {title}
           <Icon className="accordionIcon" glyph="arrow" />
         </div>
-        <div className="content" ref={obj => { this.content = obj }}>
+        <div className="content">
           {content}
         </div>
       </div>
