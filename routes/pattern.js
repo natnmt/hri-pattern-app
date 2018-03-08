@@ -9,7 +9,7 @@ var Server = mongo.Server,
 var MongoClient = require('mongodb').MongoClient;
 var url = process.env.MONGOLAB_URI;
 
-MongoClient.connect(url, function(err,database) {
+MongoClient.connect('mongodb://admin:admin123@ds261838.mlab.com:61838/heroku_r5dgwxv0', function(err,database) {
   if(!err) {
     console.log("Connected to 'ds261838.mlab.com' database");
     db = database;
