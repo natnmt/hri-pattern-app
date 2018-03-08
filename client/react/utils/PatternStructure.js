@@ -15,6 +15,7 @@ export const patternSolutionReducerStructure = {
 }
 
 export const patternReducerStructure = {
+  id: '',
   name: '',
   type: '',
   problem: '',

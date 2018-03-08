@@ -9,7 +9,7 @@ export const patternUIStructure = [
     inputType: 'text',
     placeholder: 'Insert the id. The value should not contain empty spaces or special characters',
     validation: isValidVarName,
-    required: false,
+    required: true,
   },
   {
     id: 'name',
