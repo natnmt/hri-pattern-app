@@ -14,7 +14,7 @@ const path = require('path');
 const webpack = require('webpack-stream');
 
 gulp.task('styles', function() {
-    return gulp.src('client/scss/**/*.scss')
+    return gulp.src(['client/scss/**/*.scss', 'client/scss/**/*.css'])
     .pipe(sass({ paths: [ path.join(__dirname, 'scss', 'includes') ] }))
     .pipe(gulp.dest('./public/style/css'));
 });
@@ -68,7 +68,7 @@ gulp.task('appcfg', function() {
 // So, it's best to have gulp ignore the directory as well.
 // Also, Be sure to return the stream from the task;
 // Otherwise, the task may end before the stream has finished.
-gulp.task('lint', () => gulp.src(['./**/*.js', './**/*.jsx', '!node_modules/**', '!database/**', '!./public/**', '!./test/**', '!./**/analytics/**'])
+gulp.task('lint', () => gulp.src(['./**/*.js', './**/*.jsx', '!node_modules/**', '!database/**', '!./public/**', '!./bundle.js'])
   // eslint() attaches the lint output to the "eslint" property
   // of the file object so it can be used by other modules.
   .pipe(eslint())

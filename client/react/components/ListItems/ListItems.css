@@ -13,13 +13,23 @@
 }
 
 .ListItems > .item > .info .label {
-  display: inline-block;
+  display: inline-flex;
   font-weight: bold;
-  width: 150px;
+  width: 100px;
 }
 
 .ListItems > .item > .buttons > button:first-child {
   margin-right: 10px;
   position: relative;
   top: 1px;
+}
+
+.lineContainer {
+  display: flex;
+}
+
+.ListItems > .item > .info .value {
+  width: calc(100% - 100px);
+  text-align: justify;
+  text-justify: inter-word;
 }

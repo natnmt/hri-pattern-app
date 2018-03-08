@@ -4,7 +4,10 @@ import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 // internal imports
 import { getPatternUIStructure, getPropertiesNotSelected, validatePattern } from '../../utils/PatternUIStructure'
-import { updatePatternProperty, resetPattern, addProperty } from '../../actions/PatternAction'
+import {
+  updatePatternPropertyValue, resetPattern, addPatternPropertyValue, addSolution,
+  deleteOnePatternProperty, deleteOneSolutionsLayer,
+} from '../../actions/PatternAction'
 import { savePattern, updatePattern } from '../../actions/DataAction'
 import { toggleDialogVisibility } from '../../actions/ToggleUIAction'
 import Button from '../../components/Button/Button'
@@ -20,12 +23,28 @@ class PatternForm extends Component {
     super()
     this.state = {
       nestedKey: null,
+      solutionIndex: null,
+      hfIndex: null,
       message: [],
+    }
+  }
+
+  componentWillMount = () => {
+    if (this.props.location.pathname === '/add') {
+      this.props.resetPatternData()
     }
   }
 
   changeKey = (key) => {
     this.setState({ nestedKey: key })
+  }
+
+  changeSolutionIndex = (index) => {
+    this.setState({ solutionIndex: Number.isInteger(index) ? index : null })
+  }
+
+  changeHumanFactorsIndex = (index) => {
+    this.setState({ hfIndex: Number.isInteger(index) ? index : null })
   }
 
   handlePatternValidation = (pattern, patternStructure, onFinish) => {
@@ -49,8 +68,8 @@ class PatternForm extends Component {
 
   render = () => {
     const {
-      location, pattern, updatePatternProperty, resetPatternData, dialogVisibility, toggleDialogVisibility,
-      addProperty, dbMessages,
+      location, pattern, updatePatternProperty, resetPatternData, dialogVisibility, changeDialogVisibility,
+      addPatternProperty, dbMessages, addPatternSolution, deleteProperty, deleteSolution,
     } = this.props
     const readOnly = location.pathname === '/view'
     const messages = this.state.message.map((item, index) =>
@@ -70,11 +89,11 @@ class PatternForm extends Component {
     )
     const addPropButton = !readOnly ? (
       <Button
-        onClick={() => { this.changeKey(null); toggleDialogVisibility(true) }}
+        onClick={() => { this.changeKey(null); this.changeSolutionIndex(null); this.changeHumanFactorsIndex(null); changeDialogVisibility(true) }}
         icon="add"
         iconPosition="left"
       >
-        Add another property
+        Add another element
       </Button>
     ) : null
     const dbMessagesElements = dbMessages.map((item, index) =>
@@ -92,7 +111,16 @@ class PatternForm extends Component {
           fields={getPatternUIStructure(pattern)}
           pattern={pattern}
           onChange={updatePatternProperty}
-          onAddProperty={(id) => { this.changeKey(id); toggleDialogVisibility(true) }}
+          onAddProperty={(id, solutionIndex, hfIndex) => {
+            this.changeKey(id);
+            this.changeSolutionIndex(solutionIndex);
+            this.changeHumanFactorsIndex(hfIndex);
+            changeDialogVisibility(true);
+          }}
+          checkForMoreProperties={(patternObj, id, solutionIndex, hfindex) => getPropertiesNotSelected(patternObj, id, solutionIndex, hfindex)}
+          addPatternSolution={addPatternSolution}
+          deleteProperty={deleteProperty}
+          deleteSolution={deleteSolution}
         />
         {addPropButton}
         <div className="footer">
@@ -108,11 +136,11 @@ class PatternForm extends Component {
           {dbMessagesElements}
         </div>
         <PropertiesDialog
-          properties={getPropertiesNotSelected(pattern, this.state.nestedKey)}
+          properties={getPropertiesNotSelected(pattern, this.state.nestedKey, this.state.solutionIndex, this.state.hfIndex)}
           visibility={dialogVisibility}
-          onCancel={() => toggleDialogVisibility(false)}
-          onClose={() => toggleDialogVisibility(false)}
-          onConfirm={(selectedProps) => { addProperty(selectedProps); toggleDialogVisibility(false) }}
+          onCancel={() => changeDialogVisibility(false)}
+          onClose={() => changeDialogVisibility(false)}
+          onConfirm={(selectedProps) => { addPatternProperty(selectedProps, this.state.solutionIndex, this.state.hfIndex); changeDialogVisibility(false) }}
         />
       </div>
     )
@@ -126,23 +154,32 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  updatePatternProperty: (key, value) => {
-    dispatch(updatePatternProperty(key, value))
+  updatePatternProperty: (key, value, index, hfIndex) => {
+    dispatch(updatePatternPropertyValue(key, value, index, hfIndex))
   },
   resetPatternData: () => {
     dispatch(resetPattern())
   },
-  toggleDialogVisibility: (visibility) => {
+  changeDialogVisibility: (visibility) => {
     dispatch(toggleDialogVisibility(visibility))
   },
-  addProperty: (visibility) => {
-    dispatch(addProperty(visibility))
+  addPatternProperty: (properties, index, hfIndex) => {
+    dispatch(addPatternPropertyValue(properties, index, hfIndex))
+  },
+  addPatternSolution: (index) => {
+    dispatch(addSolution(index))
   },
   savePattern: (patternObj, onFinish) => {
     dispatch(savePattern(patternObj, onFinish))
   },
   updatePattern: (patternObj, onFinish) => {
     dispatch(updatePattern(patternObj, onFinish))
+  },
+  deleteProperty: (key, index, hfIndex) => {
+    dispatch(deleteOnePatternProperty(key, index, hfIndex))
+  },
+  deleteSolution: (index, hfIndex) => {
+    dispatch(deleteOneSolutionsLayer(index, hfIndex))
   },
 })
 

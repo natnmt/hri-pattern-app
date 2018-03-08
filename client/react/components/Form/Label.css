@@ -1,4 +1,4 @@
-.Label {
+.label {
   font-family: Arial;
   padding: 0 1em 0 0;
   font-size: 12px;
@@ -6,26 +6,26 @@
   line-height: initial;
 }
 
-.Label.inputLabel {
+.label.inputLabel {
   flex: 1;
   max-width: 150px;
   min-width: 150px;
 }
 
-.Label.buttonLabel,
-.Label.buttonWithIconLabel {
+.label.buttonLabel,
+.label.buttonWithIconLabel {
   padding: .625em 2em;
   color: currentColor;
   pointer-events: none;
 }
 
-.Label.errorLabel {
+.label.errorLabel {
   color: #5a0017;
   font-size: .75rem;
   transition-property: opacity, height;
 }
 
-.Label.menuLabel {
+.label.menuLabel {
   display: inline-block;
   padding-right: 1em;
 }

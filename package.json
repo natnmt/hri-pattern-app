@@ -55,6 +55,8 @@
   "devDependencies": {
     "css-loader": "^0.28.7",
     "extract-text-webpack-plugin": "^3.0.0",
+    "react-slick": "^0.16.0",
+    "slick-carousel": "^1.8.1",
     "style-loader": "^0.18.2"
   }
 }

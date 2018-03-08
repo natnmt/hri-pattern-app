@@ -6,7 +6,7 @@ const TextArea = (props) => (
     <span className="readOnly">{props.value}</span>
   ) : (
     <textarea
-      className={['Input', 'TextArea'].join(' ')}
+      className={['Input', 'TextArea', props.className].join(' ')}
       placeholder={props.placeholder}
       value={props.value}
       rows={props.rows}
@@ -28,6 +28,7 @@ TextArea.propTypes = {
   rows: PropTypes.number,
   cols: PropTypes.number,
   readOnly: PropTypes.bool,
+  className: PropTypes.string,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
   onChange: PropTypes.func,
@@ -44,6 +45,7 @@ TextArea.defaultProps = {
   required: false,
   disabled: false,
   autoFocus: false,
+  className: '',
 }
 
 TextArea.displayName = 'TextArea'

@@ -1,11 +1,11 @@
-.FieldContainer {
+.fieldContainer {
   display: flex;
   flex-flow: row wrap;
   line-height: 38px;
   margin: 10px 0px;
 }
 
-.FieldContainer .Label.inputLabel {
+.fieldContainer .label.inputLabel {
   max-width: initial;
   min-width: 100%;
   margin-bottom: 6px;

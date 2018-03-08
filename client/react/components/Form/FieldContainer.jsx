@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import './FieldContainer.css'
 
 const FieldContainer = ({ children, className }) => (
-  <div className={['FieldContainer', className].join(' ')}>
+  <div className={['fieldContainer', className].join(' ')}>
     {children}
   </div>
 )

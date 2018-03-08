@@ -9,7 +9,6 @@ class PropertiesDialog extends Component {
       checkedItems: [],
     }
   }
-
   onCheckBoxChange = (event) => {
     const value = event.target.checked
     const id = event.target.name
@@ -25,6 +24,9 @@ class PropertiesDialog extends Component {
       newArray.splice(idx, 1)
       this.setState({ checkedItems: newArray })
     }
+  }
+  clearCheckedItems = () => {
+    this.setState({ checkedItems: [] })
   }
   render = () => {
     const { properties, visibility, onCancel, onConfirm, onClose } = this.props
@@ -42,16 +44,16 @@ class PropertiesDialog extends Component {
     )
     return (
       <Dialog
-        title="Select properties"
+        title="Select elements"
         visibility={visibility}
         onClose={onClose}
         cancelLabel="Cancel"
-        onCancel={onCancel}
-        onConfirm={() => onConfirm(this.state.checkedItems)}
+        onCancel={() => { onCancel(); this.clearCheckedItems() }}
+        onConfirm={() => { onConfirm(this.state.checkedItems); this.clearCheckedItems() }}
         confirmLabel="OK"
       >
         <div className="propertyList">
-          <p>Select the properties that you want to include in the pattern</p>
+          <p>Select the elements that you want to include in the pattern</p>
           {checkboxes}
         </div>
       </Dialog>

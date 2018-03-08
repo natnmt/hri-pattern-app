@@ -9,7 +9,7 @@ import SearchInput from '../../components/Form/SearchInput'
 import Button from '../../components/Button/Button'
 import ListItems from '../../components/ListItems/ListItems'
 
-const Home = ({ patterns, searchPatterns, setPattern }) => (
+const Home = ({ patterns, searchPatterns, setPatternById }) => (
   <div className="Home">
     <div className="inputsContainer">
       <Link to="/add">
@@ -30,8 +30,8 @@ const Home = ({ patterns, searchPatterns, setPattern }) => (
     </div>
     <ListItems
       items={patterns}
-      onViewClick={setPattern}
-      onEditClick={setPattern}
+      onViewClick={setPatternById}
+      onEditClick={setPatternById}
       linkView="./view"
       linkEdit="./edit"
     />
@@ -46,7 +46,7 @@ const mapDispatchToProps = (dispatch) => ({
   searchPatterns: (text) => {
     dispatch(searchPattern(text))
   },
-  setPattern: (id) => {
+  setPatternById: (id) => {
     dispatch(setPattern(id))
   },
 })

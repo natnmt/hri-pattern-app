@@ -3,7 +3,7 @@ import './Label.css'
 
 const Label = ({ children, className, id, type, value }) => {
   const classNames = [
-    'Label',
+    'label',
     `${type}Label`,
     className,
   ].join(' ')

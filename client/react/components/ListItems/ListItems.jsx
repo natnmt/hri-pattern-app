@@ -24,10 +24,22 @@ const ListItems = ({ items, onViewClick, onEditClick, linkView, linkEdit }) => {
     return (
       <div className="item" key={index}>
         <div className="info">
-          <p><span className="label">ID: </span>{item.id}</p>
-          <p><span className="label">Name: </span>{item.name}</p>
-          <p><span className="label">Type: </span>{item.type}</p>
-          <p><span className="label">Problem: </span>{item.problem}</p>
+          <p className="lineContainer">
+            <span className="label">ID: </span>
+            <span className="value">{item.id}</span>
+          </p>
+          <p className="lineContainer">
+            <span className="label">Name: </span>
+            <span className="value">{item.name}</span>
+          </p>
+          <p className="lineContainer">
+            <span className="label">Type: </span>
+            <span className="value">{item.type}</span>
+          </p>
+          <p className="lineContainer">
+            <span className="label">Problem: </span>
+            <span className="value">{item.problem}</span>
+          </p>
         </div>
         <div className="buttons">
           {viewElement}

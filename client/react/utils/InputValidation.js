@@ -1,28 +1,37 @@
 import React from 'react'
 import Input from '../components/Form/Input'
 import TextArea from '../components/Form/TextArea'
+import Button from '../components/Button/Button'
 // import TextArea from '../components/Form/TextArea'
 
-export const getInput = (key, type, value, onChange, options, readOnly, placeholder) => {
+export const getInput = (key, type, inputType, value, isRequired, onChange, onDelete, options, readOnly, placeholder, solutionIndex, hfIndex) => {
   let input = null
-  switch (type) {
-    case 'json':
+  const deleteButton = !readOnly && !isRequired ? (
+    <Button
+      onClick={() => onDelete(key, solutionIndex, hfIndex)}
+      icon="remove"
+      secondaryColor
+    />
+  ) : null
+  switch (inputType) {
+    case 'textarea':
       input = (
         <TextArea
           type={type}
           name={key}
           value={value}
-          onChange={(event) => onChange(key, event.target.value)}
+          onChange={(event) => onChange(key, event.target.value, solutionIndex, hfIndex)}
           isValid={false}
           required
           placeholder={placeholder}
           readOnly={readOnly}
+          className={type === 'json' ? 'textareaJson' : 'textareaString'}
         />
       )
       break
     case 'select':
       input = (
-        <select value={value} onChange={(event) => onChange(key, event.target.value)} readOnly={readOnly}>
+        <select value={value} onChange={(event) => onChange(key, event.target.value, solutionIndex, hfIndex)} readOnly={readOnly}>
           <option key="default" value="">
             Select an option
           </option>
@@ -43,7 +52,7 @@ export const getInput = (key, type, value, onChange, options, readOnly, placehol
           type={type}
           name={key}
           value={value}
-          onChange={(event) => onChange(key, event.target.value)}
+          onChange={(event) => onChange(key, event.target.value, solutionIndex, hfIndex)}
           isValid={false}
           required
           placeholder={placeholder}
@@ -52,7 +61,26 @@ export const getInput = (key, type, value, onChange, options, readOnly, placehol
       )
     )
   }
-  return input
+  return (
+    <span style={{ display: 'flex' }}>{input}{deleteButton}</span>
+  )
+}
+
+const solutionsId = 'solution_layer.solutions'
+const hfId = 'solution_layer.solutions.human_factors'
+
+export const getInputValue = (pattern, id, solutionIndex, hfIndex) => {
+  if (!Number.isInteger(solutionIndex)) {
+    return pattern.hasOwnProperty(id) ? pattern[id] : ''
+  }
+  else {
+    if (!Number.isInteger(hfIndex)) {
+      return pattern[solutionsId][solutionIndex][id]
+    }
+    else {
+      return pattern[solutionsId][solutionIndex][hfId][hfIndex][id]
+    }
+  }
 }
 
 export const isValidVarName = (str) => {

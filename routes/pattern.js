@@ -6,8 +6,8 @@ var Server = mongo.Server,
     Db = mongo.Db,
     BSON = mongo.BSONPure;
 
-var server = new Server('localhost', 27017, {auto_reconnect: true});
-db = new Db('hripatternsdb', server);
+var server = new Server('ds261838.mlab.com', 61838, {auto_reconnect: true});
+db = new Db('heroku_r5dgwxv0', server);
 
 db.open(function(err, db) {
   if(!err) {
@@ -34,11 +34,13 @@ exports.searchPattern = function(req, res) {
     {"name": valueParam},
     {"type": valueParam},
     {"context.description": valueParam},
+    {"context.description": valueParam},
     {"forces": valueParam},
     {"problem": valueParam},
     {"init_state.description": valueParam},
     {"end_state.description": valueParam},
     {"solution_layer.type": valueParam},
+    {"pattern_link": valueParam},
   ]}
   db.collection('patterns', function(err, collection) {
     console.log(err)
@@ -88,6 +90,7 @@ exports.addPattern = function(req, res) {
 
 exports.updatePattern = function(req, res) {
   var id = req.params.id;
+  console.log(id)
   var idObject = new mongo.ObjectID(id);
   var pattern = req.body;
   console.log('Updating pattern: ' + id);
@@ -116,6 +119,24 @@ exports.deletePattern = function(req, res) {
       } else {
         console.log('' + result + ' document(s) deleted');
         res.send(req.body);
+      }
+    });
+  });
+}
+
+exports.addFeedback = function(req, res) {
+  var id = req.params.id;
+  var idObject = new mongo.ObjectID(id);
+  var feedback = req.body;
+  console.log('Adding feedback to pattern: ' + id);
+  db.collection('patterns', function(err, collection) {
+    collection.update({'_id': idObject}, { $push: {"feedback": feedback} }, function(err, result) {
+      if (err) {
+        console.log('Error adding feedback to pattern: ' + err);
+        res.send({'error':'An error has occurred'});
+      } else {
+        console.log('' + result + ' document(s) updated');
+        res.send(pattern);
       }
     });
   });

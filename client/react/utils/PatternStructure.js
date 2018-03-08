@@ -1,17 +1,29 @@
 /* eslint-disable */
+export const patternHFReducerStructure = {
+  'solution_layer.solutions.human_factors.description': '',
+  'solution_layer.solutions.human_factors.end_state.description': '',
+}
+
+export const patternSolutionReducerStructure = {
+  'solution_layer.solutions.description': '',
+  'solution_layer.solutions.solution': '',
+  /*'solution_layer.solutions.human_factors': [{
+    'solution_layer.solutions.human_factors.description': '122',
+    'solution_layer.solutions.human_factors.end_state.description': 'abc',
+  }],*/
+  'solution_layer.solutions.end_state.description': '',
+}
 
 export const patternReducerStructure = {
-  id: '',
   name: '',
   type: '',
+  problem: '',
   'context.description': '',
   forces: '',
-  problem: '',
   'init_state.description': '',
   'solution_layer.category': '',
-  'solution_layer.description': '',
-  'solution_layer.solution': '',
-  'solution_layer.end_state.description': '',
+  'solution_layer.solutions': [patternSolutionReducerStructure],
+  'feedback': [],
 }
 
 export const unflatten = (data) => {
@@ -28,7 +40,22 @@ export const unflatten = (data) => {
       cur = cur[prop] || (cur[prop] = (m[2] ? [] : {}))
       prop = m[2] || m[1]
     }
-    cur[prop] = data[p]
+    if (Array.isArray(data[p])) {
+      const children = []
+      data[p].forEach(item => {
+        const ids = p.split('.')
+        const unflatItem = unflatten(item)
+        let object = unflatItem
+        ids.forEach(id => {
+          object = object[id]
+        })
+        children.push(object)
+        cur[prop] = children
+      })
+    }
+    else {
+      cur[prop] = data[p]
+    }
   }
   return resultholder[''] || resultholder
 };
@@ -39,7 +66,8 @@ export const flatten = (data) => {
     if (Object(cur) !== cur) {
       result[prop] = cur
     } else if (Array.isArray(cur)) {
-       for(let i=0, l=cur.length; i<l; i++)
+      let l = 0
+      for(let i=0, l=cur.length; i<l; i++)
          recurse(cur[i], prop + '[' + i + ']');
       if (l == 0)
         result[prop] = []

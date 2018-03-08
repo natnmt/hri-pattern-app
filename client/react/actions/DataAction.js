@@ -1,7 +1,7 @@
 /* eslint-disable */
 import fetch from 'isomorphic-fetch'
 import { toggleLoadingVisibility } from './ToggleUIAction'
-import { resetPattern, setSearchedPatterns, addMessage, resetMessage } from './PatternAction'
+import { resetPattern, setUnflattenSearchedPatterns, addMessage, resetMessage, resetSearchedPattern } from './PatternAction'
 import { unflatten, flatten } from '../utils/PatternStructure'
 import { isJson } from '../utils/InputValidation'
 
@@ -26,6 +26,8 @@ export const savePattern = (pattern, onFinish) => (dispatch) => {
     else {
       dispatch(addMessage('Error saving the pattern. The "ID" already exist, please create another ID.'))
       dispatch(toggleLoadingVisibility(false))
+      dispatch(resetPattern())
+      dispatch(resetSearchedPattern())
     }
   })
 }
@@ -36,11 +38,13 @@ export const updatePattern = (pattern, onFinish) => (dispatch) => {
   dispatch(resetMessage())
   dispatch(toggleLoadingVisibility(true))
   const newObject = Object.assign({}, pattern)
+  console.log(newObject)
+  const id = newObject.hasOwnProperty('_id') ? newObject['_id'] : pattern.id
   if (newObject.hasOwnProperty('_id')) {
     delete newObject['_id']
   }
   const data = unflatten(newObject)
-  return fetch(`/database/update/${pattern.id}`, {
+  return fetch(`/database/update/${id}`, {
     method: "PUT",
     headers: {
       "Accept": "application/json",
@@ -57,6 +61,7 @@ export const updatePattern = (pattern, onFinish) => (dispatch) => {
     else {
       dispatch(toggleLoadingVisibility(false))
       dispatch(resetPattern())
+      dispatch(resetSearchedPattern())
       onFinish()
     }
   })
@@ -81,6 +86,7 @@ export const persistPattern = (pattern, onFinish) => (dispatch) => {
     else {
       dispatch(toggleLoadingVisibility(false))
       dispatch(resetPattern())
+      dispatch(resetSearchedPattern())
       onFinish()
     }
   })
@@ -98,6 +104,6 @@ export const searchPattern = (text) => (dispatch) => {
   })
   .then(json => {
     const flattenData = json.map(item => flatten(Object.assign({}, item)))
-    dispatch(setSearchedPatterns(flattenData))
+    dispatch(setUnflattenSearchedPatterns(flattenData))
   })
 }
