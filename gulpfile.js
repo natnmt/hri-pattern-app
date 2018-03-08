@@ -43,7 +43,6 @@ gulp.task('default', function() {
     gulp.start('index');
     gulp.start('appcfg');
     gulp.start('lib-styles');
-    gulp.start('lint');
 });
 
 gulp.task('webpack', function() {
