@@ -6,23 +6,18 @@ var Server = mongo.Server,
     Db = mongo.Db,
     BSON = mongo.BSONPure;
 
-var server = new Server('mongodb://admin:admin123@ds261838.mlab.com:61838/heroku_r5dgwxv0', 61838, {auto_reconnect: true});
-db = new Db('heroku_r5dgwxv0', server);
+var MongoClient = require('mongodb').MongoClient;
+var url = process.env.MONGOLAB_URI;
 
-db.open(function(err, db) {
+MongoClient.connect(url, function(err,database) {
   if(!err) {
     console.log("Connected to 'ds261838.mlab.com' database");
-    db.collection('patterns', {strict:true}, function(err, collection) {
-      if (err) {
-        console.log("The 'patterns' collection doesn't exist. Creating it with sample data...");
-        db.createCollection("patterns", function(err, res) {
-          if (err) throw err;
-            console.log("Collection created!");
-        });
-      }
-    });
+    db = database;
   }
-});
+  else {
+    console.log(err);
+  }
+})
 
 exports.searchPattern = function(req, res) {
   var text = req.params.text;
