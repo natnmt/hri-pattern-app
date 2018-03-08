@@ -3,8 +3,9 @@
   "version": "0.0.1",
   "description": "Application to add, edit and evaluate HRI patterns",
   "scripts": {
-    "gulp": "gulp",
-    "start": "node app.js"
+    "build": "gulp",
+    "start": "node app.js",
+    "postinstall": "gulp build"
   },
   "dependencies": {
     "babel-core": "^6.5.2",
