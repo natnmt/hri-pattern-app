@@ -5,7 +5,7 @@
   "scripts": {
     "build": "gulp",
     "start": "node app.js",
-    "postinstall": "gulp build"
+    "postinstall": "gulp"
   },
   "dependencies": {
     "babel-core": "^6.5.2",
