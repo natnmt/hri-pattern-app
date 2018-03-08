@@ -6,12 +6,12 @@ var Server = mongo.Server,
     Db = mongo.Db,
     BSON = mongo.BSONPure;
 
-var server = new Server('ds261838.mlab.com', 61838, {auto_reconnect: true});
+var server = new Server('mongodb://admin:admin123@ds261838.mlab.com:61838/heroku_r5dgwxv0', 61838, {auto_reconnect: true});
 db = new Db('heroku_r5dgwxv0', server);
 
 db.open(function(err, db) {
   if(!err) {
-    console.log("Connected to 'hripatternsdb' database");
+    console.log("Connected to 'ds261838.mlab.com' database");
     db.collection('patterns', {strict:true}, function(err, collection) {
       if (err) {
         console.log("The 'patterns' collection doesn't exist. Creating it with sample data...");
